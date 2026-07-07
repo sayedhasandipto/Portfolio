@@ -1,70 +1,47 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const chars = "!<>-_\\/[]{}—=+*^?#________";
+const CHARS = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%&";
 
-export default function TextScramble({ text, autostart = true, delay = 0 }) {
-  const [output, setOutput] = useState("");
-  const frameRef = useRef(0);
-  const queueRef = useRef([]);
-  const resolveRef = useRef(null);
-
-  const update = () => {
-    let complete = 0;
-    const newOutput = queueRef.current.map((item, i) => {
-      let { from, to, start, end, char } = item;
-      if (frameRef.current >= end) {
-        complete++;
-        return to;
-      } else if (frameRef.current >= start) {
-        if (!char || Math.random() < 0.28) {
-          char = chars[Math.floor(Math.random() * chars.length)];
-          queueRef.current[i].char = char;
-        }
-        return char;
-      } else {
-        return from;
-      }
-    });
-
-    setOutput(newOutput.join(""));
-
-    if (complete === queueRef.current.length) {
-      resolveRef.current();
-    } else {
-      frameRef.current++;
-      requestAnimationFrame(update);
-    }
-  };
-
-  const scramble = (newText) => {
-    const oldText = output || "";
-    const length = Math.max(oldText.length, newText.length);
-    const promise = new Promise((resolve) => (resolveRef.current = resolve));
-    queueRef.current = [];
-    
-    for (let i = 0; i < length; i++) {
-      const from = oldText[i] || "";
-      const to = newText[i] || "";
-      const start = Math.floor(Math.random() * 40);
-      const end = start + Math.floor(Math.random() * 40);
-      queueRef.current.push({ from, to, start, end, char: "" });
-    }
-    
-    frameRef.current = 0;
-    update();
-    return promise;
-  };
+export default function TextScramble({ text, delay = 0 }) {
+  const [display, setDisplay] = useState(text);
+  const rafRef = useRef(null);
 
   useEffect(() => {
-    if (autostart) {
-      const timer = setTimeout(() => {
-        scramble(text);
-      }, delay);
-      return () => clearTimeout(timer);
-    }
-  }, [text]);
+    let started = false;
+    const timeout = setTimeout(() => {
+      started = true;
+      const len = text.length;
+      let frame = 0;
+      const totalFrames = len * 3;
 
-  return <span>{output}</span>;
+      const tick = () => {
+        let out = "";
+        for (let i = 0; i < len; i++) {
+          if (i < Math.floor(frame / 3)) {
+            out += text[i];
+          } else {
+            out += CHARS[Math.floor(Math.random() * CHARS.length)];
+          }
+        }
+        setDisplay(out);
+        frame++;
+        if (frame <= totalFrames) {
+          rafRef.current = requestAnimationFrame(tick);
+        } else {
+          setDisplay(text);
+        }
+      };
+
+      rafRef.current = requestAnimationFrame(tick);
+    }, delay);
+
+    return () => {
+      clearTimeout(timeout);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
+    };
+  }, [text, delay]);
+
+  return <span>{display}</span>;
 }

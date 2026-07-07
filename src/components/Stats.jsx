@@ -1,35 +1,53 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
-import { useRef, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import InteractiveDotGrid from "./InteractiveDotGrid";
+import ScrollReveal from "./ScrollReveal";
 
-
-function Counter({ value, duration = 2 }) {
+function CountUp({ target, suffix = "", duration = 1500 }) {
   const [count, setCount] = useState(0);
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true });
+  const started = useRef(false);
 
   useEffect(() => {
-    if (isInView) {
-      let start = 0;
-      const end = parseInt(value);
-      if (start === end) return;
+    const el = ref.current;
+    if (!el) return;
 
-      let totalMilisecondsCount = duration * 1000;
-      let timerStep = Math.max(totalMilisecondsCount / end, 50);
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting && !started.current) {
+          started.current = true;
+          observer.unobserve(el);
 
-      let timer = setInterval(() => {
-        start += 1;
-        setCount(start);
-        if (start === end) clearInterval(timer);
-      }, timerStep);
+          const numericTarget = parseInt(target, 10);
+          const startTime = performance.now();
 
-      return () => clearInterval(timer);
-    }
-  }, [isInView, value, duration]);
+          const tick = (now) => {
+            const elapsed = now - startTime;
+            const progress = Math.min(elapsed / duration, 1);
+            // Ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            setCount(Math.floor(eased * numericTarget));
+            if (progress < 1) requestAnimationFrame(tick);
+            else setCount(numericTarget);
+          };
 
-  return <span ref={ref}>{count}</span>;
+          requestAnimationFrame(tick);
+        }
+      },
+      { threshold: 0.5 }
+    );
+
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, [target, duration]);
+
+  return (
+    <span ref={ref}>
+      {count}
+      {suffix}
+    </span>
+  );
 }
 
 export default function Stats() {
@@ -41,34 +59,23 @@ export default function Stats() {
   ];
 
   return (
-    <section className="py-24 bg-[#050505] border-y border-white/5 relative overflow-hidden">
+    <section className="py-24 bg-[#0A0A0A] border-y border-white/5 relative overflow-hidden">
       <InteractiveDotGrid />
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-6">
           {stats.map((stat, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1, duration: 0.8 }}
-              className="text-center group"
-            >
-              <h4 className="text-5xl md:text-6xl font-bold text-white mb-2 group-hover:text-brand transition-colors">
-                <Counter value={stat.value} />
-                <span className="text-brand">{stat.suffix}</span>
+            <ScrollReveal key={index} delay={index * 150} className="text-center group">
+              <h4 className="text-5xl md:text-6xl font-bold text-white mb-2 group-hover:text-brand transition-colors drop-shadow-[0_0_0_rgba(139, 92, 246,0)] group-hover:drop-shadow-[0_0_15px_rgba(139, 92, 246,0.5)]">
+                <CountUp target={stat.value} suffix={stat.suffix} />
               </h4>
               <p className="text-xs uppercase tracking-widest text-gray-500 font-medium">
                 {stat.label}
               </p>
-            </motion.div>
+            </ScrollReveal>
           ))}
         </div>
       </div>
-      
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1/2 h-1/2 bg-brand/5 blur-[120px] rounded-full -z-10" />
     </section>
   );
 }

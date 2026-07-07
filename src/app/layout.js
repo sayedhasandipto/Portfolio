@@ -1,9 +1,8 @@
 import { Inter, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import SmoothScroll from "@/components/SmoothScroll";
 import CustomCursor from "@/components/CustomCursor";
-import NoiseOverlay from "@/components/NoiseOverlay";
 import ClickEffect from "@/components/ClickEffect";
+import NoiseOverlay from "@/components/NoiseOverlay";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -43,7 +42,7 @@ export const metadata = {
     siteName: "Sayed Hasan Dipto Portfolio",
     images: [
       {
-        url: "https://i.ibb.co/wZVXT6Yd/m1.png", // Using your hero image as the preview
+        url: "https://i.ibb.co/wZVXT6Yd/m1.png",
         width: 1200,
         height: 630,
       },
@@ -64,15 +63,13 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${playfair.variable} bg-[#050505] text-white font-sans selection:bg-brand selection:text-dark antialiased transition-colors duration-300 relative min-h-screen`}
+        className={`${inter.variable} ${playfair.variable} bg-[#0A0A0A] text-white font-sans selection:bg-brand selection:text-dark antialiased relative min-h-screen`}
       >
         <div className="relative min-h-screen">
-          <SmoothScroll>
-            <NoiseOverlay />
-            <ClickEffect />
-            <CustomCursor />
-            {children}
-          </SmoothScroll>
+          <CustomCursor />
+          <ClickEffect />
+          <NoiseOverlay />
+          {children}
         </div>
 
         {/* JSON-LD Structured Data for Google SEO */}
@@ -93,7 +90,6 @@ export default function RootLayout({ children }) {
             })
           }}
         />
-
       </body>
     </html>
   );

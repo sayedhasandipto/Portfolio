@@ -1,52 +1,60 @@
-"use client";
-
-import { motion } from "framer-motion";
+// Partners — infinite CSS marquee with pause-on-hover, no JS overhead
 import InteractiveDotGrid from "./InteractiveDotGrid";
 
+const partners = [
+  "HTML5", "CSS3", "JavaScript", "React.js", "Next.js", "Tailwind CSS",
+  "VS Code", "Netlify", "Node.js", "MongoDB", "Firebase",
+  "Git & GitHub", "Figma", "UI/UX Design", "Better Auth", "API Integration",
+];
+
+// Duplicate for seamless loop
+const items = [...partners, ...partners];
 
 export default function Partners() {
-  const partners = [
-    "HTML 5", "CSS3", "JavaScript", "React.js", "Next.js", "Tailwind CSS", "VS Code", "Netlify",
-    "Node.js", "MongoDB", "Firebase", "Git & GitHub", "Figma", "UI/UX Design", "Better Auth", "API Integration"
-  ];
-
   return (
-    <section className="py-20 bg-[#050505] overflow-hidden border-y border-white/5 transition-colors relative" data-purpose="trusted-partners">
-
+    <section
+      className="py-20 bg-[#0A0A0A] overflow-hidden border-y border-white/5 relative"
+      data-purpose="trusted-partners"
+    >
       <InteractiveDotGrid />
 
-      <div className="max-w-7xl mx-auto px-6 mb-12">
-        <h3 className="text-center font-serif text-3xl italic text-gray-600 dark:text-gray-400">
+      <div className="max-w-7xl mx-auto px-6 mb-12 relative z-10">
+        <h3 className="text-center font-serif text-3xl italic text-gray-400">
           Skill&apos;s I&apos;ve Mastered
         </h3>
       </div>
 
-      <div className="relative flex overflow-hidden">
-        <motion.div
-          animate={{
-            x: ["0%", "-50%"],
-          }}
-          transition={{
-            x: {
-              duration: 20,
-              repeat: Infinity,
-              ease: "linear",
-            },
-          }}
-          className="flex whitespace-nowrap"
+      {/* Fade edges */}
+      <div className="relative">
+        <div className="absolute left-0 top-0 h-full w-32 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to right, #050505, transparent)" }} />
+        <div className="absolute right-0 top-0 h-full w-32 z-10 pointer-events-none"
+          style={{ background: "linear-gradient(to left, #050505, transparent)" }} />
+
+        <div
+          className="flex whitespace-nowrap group"
+          style={{ animation: "marquee 35s linear infinite" }}
         >
-          {partners.concat(partners).map((partner, index) => (
+          {items.map((skill, index) => (
             <div
               key={index}
-              className="mx-4 bg-white dark:bg-dark px-12 py-8 rounded-xl flex items-center justify-center border border-gray-100 dark:border-white/10 hover:shadow-sm hover:border-brand/30 transition-all duration-300 group min-w-[250px]"
+              data-cursor="hover"
+              className="mx-3 bg-[#0A0A0A] px-10 py-6 rounded-2xl flex items-center justify-center border border-white/8 hover:border-brand/50 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(139, 92, 246,0.1)] transition-all duration-300 group/item min-w-fit flex-shrink-0"
+              style={{ animationPlayState: "inherit" }}
             >
-              <span className="font-bold text-2xl opacity-30 group-hover:opacity-100 group-hover:text-brand transition-all duration-300 text-dark dark:text-white">
-                {partner}
+              <span className="font-bold text-xl opacity-25 group-hover/item:opacity-100 group-hover/item:text-brand transition-all duration-300 text-white whitespace-nowrap">
+                {skill}
               </span>
             </div>
           ))}
-        </motion.div>
+        </div>
       </div>
+
+      <style>{`
+        .group:hover > div {
+          animation-play-state: paused;
+        }
+      `}</style>
     </section>
   );
 }

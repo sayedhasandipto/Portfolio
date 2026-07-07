@@ -1,109 +1,104 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion, useSpring } from "framer-motion";
+import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [cursorMode, setCursorMode] = useState("default"); // default, hover, view
-  const [isMobile, setIsMobile] = useState(false);
-
-  // Faster springs for better response time
-  const cursorXSpring = useSpring(mousePosition.x, { stiffness: 200, damping: 40, mass: 0.5 });
-  const cursorYSpring = useSpring(mousePosition.y, { stiffness: 200, damping: 40, mass: 0.5 });
+  const dotRef = useRef(null);
+  const ringRef = useRef(null);
 
   useEffect(() => {
-    // Check if mobile device
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia("(pointer: coarse)").matches);
-    };
-    checkMobile();
-    window.addEventListener("resize", checkMobile);
+    const dot = dotRef.current;
+    const ring = ringRef.current;
+    if (!dot || !ring) return;
 
-    const updateMousePosition = (e) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-      cursorXSpring.set(e.clientX);
-      cursorYSpring.set(e.clientY);
-    };
+    let raf;
+    let ringX = -100, ringY = -100;
+    let targetX = -100, targetY = -100;
 
-    const handleMouseOver = (e) => {
-      const target = e.target;
-      const isProjectCard = target.closest(".project-card");
-      const isClickable = 
-        target.tagName.toLowerCase() === "button" ||
-        target.tagName.toLowerCase() === "a" ||
-        target.closest("button") ||
-        target.closest("a") ||
-        target.closest("[data-cursor]");
-
-      if (isProjectCard) {
-        setCursorMode("view");
-      } else if (isClickable) {
-        setCursorMode("hover");
-      } else {
-        setCursorMode("default");
-      }
+    const onMove = (e) => {
+      targetX = e.clientX;
+      targetY = e.clientY;
+      dot.style.transform = `translate(${targetX}px, ${targetY}px)`;
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
+    const animate = () => {
+      ringX += (targetX - ringX) * 0.12;
+      ringY += (targetY - ringY) * 0.12;
+      ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
+      raf = requestAnimationFrame(animate);
+    };
+
+    const onEnterHover = () => ring.classList.add("cursor-hover");
+    const onLeaveHover = () => ring.classList.remove("cursor-hover");
+
+    document.addEventListener("mousemove", onMove, { passive: true });
+    document.querySelectorAll("[data-cursor='hover']").forEach((el) => {
+      el.addEventListener("mouseenter", onEnterHover);
+      el.addEventListener("mouseleave", onLeaveHover);
+    });
+
+    raf = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener("resize", checkMobile);
-      window.removeEventListener("mousemove", updateMousePosition);
-      window.removeEventListener("mouseover", handleMouseOver);
+      document.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf);
     };
-  }, [cursorXSpring, cursorYSpring]);
-
-  if (isMobile) return null;
+  }, []);
 
   return (
     <>
-      {/* Trailing Ring / View Mode Circle */}
-      <motion.div
-        className="fixed top-0 left-0 rounded-full border border-dark/30 dark:border-brand pointer-events-none z-[100] mix-blend-difference flex items-center justify-center overflow-hidden"
+      {/* Dot — snaps instantly */}
+      <div
+        ref={dotRef}
+        className="cursor-dot"
         style={{
-          x: cursorXSpring,
-          y: cursorYSpring,
-          translateX: "-50%",
-          translateY: "-50%",
-          width: cursorMode === "view" ? 100 : 32,
-          height: cursorMode === "view" ? 100 : 32,
-        }}
-        animate={{
-          scale: cursorMode === "hover" ? 2.5 : 1,
-          opacity: cursorMode === "hover" ? 0 : 1,
-          backgroundColor: cursorMode === "view" ? "rgba(217, 255, 0, 1)" : "rgba(217, 255, 0, 0)",
-        }}
-        transition={{ type: "spring", stiffness: 200, damping: 30 }}
-      >
-        {cursorMode === "view" && (
-          <motion.span
-            initial={{ opacity: 0, scale: 0 }}
-            animate={{ opacity: 1, scale: 1 }}
-            className="text-dark font-bold text-[10px] tracking-widest uppercase"
-          >
-            View
-          </motion.span>
-        )}
-      </motion.div>
-      
-      {/* Inner Dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-2 h-2 bg-dark dark:bg-brand rounded-full pointer-events-none z-[100] mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 4,
-          y: mousePosition.y - 4,
-          scale: cursorMode === "hover" ? 3 : cursorMode === "view" ? 0 : 1,
-          opacity: cursorMode === "hover" ? 0.5 : 1,
-        }}
-        transition={{ 
-          type: "spring", 
-          stiffness: 1000, 
-          damping: 40, 
-          mass: 0.1 
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 6,
+          height: 6,
+          borderRadius: "50%",
+          background: "#8B5CF6",
+          pointerEvents: "none",
+          zIndex: 9999,
+          transform: "translate(-100px, -100px)",
+          marginLeft: -3,
+          marginTop: -3,
+          willChange: "transform",
         }}
       />
+      {/* Ring — lags behind */}
+      <div
+        ref={ringRef}
+        className="cursor-ring"
+        style={{
+          position: "fixed",
+          top: 0,
+          left: 0,
+          width: 36,
+          height: 36,
+          borderRadius: "50%",
+          border: "1.5px solid rgba(139, 92, 246,0.5)",
+          pointerEvents: "none",
+          zIndex: 9998,
+          transform: "translate(-100px, -100px)",
+          marginLeft: -18,
+          marginTop: -18,
+          willChange: "transform",
+          transition: "width 0.2s, height 0.2s, border-color 0.2s",
+        }}
+      />
+      <style>{`
+        @media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
+        * { cursor: none !important; }
+        .cursor-ring.cursor-hover {
+          width: 56px;
+          height: 56px;
+          border-color: #8B5CF6;
+          margin-left: -28px;
+          margin-top: -28px;
+        }
+      `}</style>
     </>
   );
 }

@@ -1,9 +1,9 @@
 "use client";
 
-import { motion, AnimatePresence } from "framer-motion";
 import { useState, useEffect } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
 import InteractiveDotGrid from "./InteractiveDotGrid";
+import ScrollReveal from "./ScrollReveal";
 
 const testimonials = [
   {
@@ -19,72 +19,87 @@ const testimonials = [
   {
     name: "David Chen",
     role: "Founder of GreenLoop",
-    text: "The 3D animations and performance optimizations Sayed implemented for our site really helped us stand out. He's a true creative developer.",
+    text: "The animations and performance optimizations Sayed implemented for our site really helped us stand out. He's a true creative developer.",
   },
 ];
 
 export default function Testimonials() {
   const [index, setIndex] = useState(0);
+  const [visible, setVisible] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setIndex((prev) => (prev + 1) % testimonials.length);
+      // Fade out → swap → fade in
+      setVisible(false);
+      setTimeout(() => {
+        setIndex((prev) => (prev + 1) % testimonials.length);
+        setVisible(true);
+      }, 300);
     }, 5000);
     return () => clearInterval(interval);
   }, []);
 
+  const goTo = (i) => {
+    if (i === index) return;
+    setVisible(false);
+    setTimeout(() => {
+      setIndex(i);
+      setVisible(true);
+    }, 300);
+  };
+
   return (
-    <section className="py-24 px-6 relative bg-[#050505] overflow-hidden">
+    <section className="py-24 px-6 relative bg-[#0A0A0A] overflow-hidden">
       <InteractiveDotGrid />
 
-      <div className="max-w-4xl mx-auto text-center">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          className="inline-block p-4 bg-brand/10 rounded-full mb-8"
-        >
-          <FaQuoteLeft className="text-brand text-2xl" />
-        </motion.div>
+      <div className="max-w-4xl mx-auto text-center relative z-10">
+        <ScrollReveal delay={0}>
+          <div className="inline-block p-4 bg-brand/10 rounded-full mb-8 border border-brand/20">
+            <FaQuoteLeft className="text-brand text-2xl" />
+          </div>
+        </ScrollReveal>
 
-        <div className="relative h-[250px] md:h-[200px]">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 20, filter: "blur(10px)" }}
-              animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-              exit={{ opacity: 0, y: -20, filter: "blur(10px)" }}
-              transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-              className="absolute inset-0 flex flex-col items-center justify-center"
-            >
-              <p className="text-2xl md:text-3xl font-serif italic text-white leading-relaxed mb-8">
-                &quot;{testimonials[index].text}&quot;
+        <div className="relative h-[220px] md:h-[180px]">
+          <div
+            style={{
+              opacity: visible ? 1 : 0,
+              transform: visible ? "translateY(0)" : "translateY(8px)",
+              transition: "opacity 0.3s ease, transform 0.3s ease",
+              position: "absolute",
+              inset: 0,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <p className="text-xl md:text-2xl font-serif italic text-white/80 leading-relaxed mb-6 drop-shadow-md">
+              &quot;{testimonials[index].text}&quot;
+            </p>
+            <div>
+              <h4 className="text-white font-bold text-base uppercase tracking-wider">
+                {testimonials[index].name}
+              </h4>
+              <p className="text-brand text-xs font-medium uppercase tracking-[0.2em] mt-1">
+                {testimonials[index].role}
               </p>
-              <div>
-                <h4 className="text-white font-bold text-lg uppercase tracking-wider">{testimonials[index].name}</h4>
-                <p className="text-brand text-xs font-medium uppercase tracking-[0.2em]">{testimonials[index].role}</p>
-              </div>
-            </motion.div>
-          </AnimatePresence>
+            </div>
+          </div>
         </div>
 
         {/* Pagination Dots */}
-        <div className="flex justify-center gap-3 mt-12">
+        <div className="flex justify-center gap-3 mt-8">
           {testimonials.map((_, i) => (
             <button
               key={i}
-              onClick={() => setIndex(i)}
-              className={`w-2 h-2 rounded-full transition-all duration-500 ${
-                i === index ? "bg-brand w-8" : "bg-white/20"
+              onClick={() => goTo(i)}
+              data-cursor="hover"
+              className={`h-2 rounded-full transition-all duration-300 ${
+                i === index ? "bg-brand w-8" : "bg-white/20 w-2 hover:bg-white/40"
               }`}
             />
           ))}
         </div>
-      </div>
-
-      {/* Decorative Elements */}
-      <div className="absolute top-0 left-0 w-full h-full opacity-30 pointer-events-none">
-        <div className="absolute top-10 left-10 w-64 h-64 bg-brand/5 blur-[100px] rounded-full" />
-        <div className="absolute bottom-10 right-10 w-64 h-64 bg-brand/5 blur-[100px] rounded-full" />
       </div>
     </section>
   );

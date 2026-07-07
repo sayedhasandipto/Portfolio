@@ -1,7 +1,8 @@
 @import "tailwindcss";
 
+/* Forced cache invalidation for Turbopack */
 @theme inline {
-  --color-brand: #D9FF00;
+  --color-brand: #8B5CF6;
   --color-dark: #0A0A0A;
   --font-sans: var(--font-inter), ui-sans-serif, system-ui, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
   --font-serif: var(--font-playfair), ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
@@ -13,10 +14,6 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-  }
-  
-  body {
-    @apply transition-colors duration-300;
   }
 }
 
@@ -30,9 +27,6 @@
     -webkit-text-stroke: 1px currentColor;
     color: transparent;
   }
-  .dark .outline-text {
-    -webkit-text-stroke: 1px #ffffff;
-  }
   .project-card:hover img {
     transform: scale(1.05);
   }
@@ -43,29 +37,26 @@
     background: var(--color-brand);
   }
   .dot-grid {
-    background-image: radial-gradient(circle, rgba(217, 255, 0, 0.15) 1px, transparent 1px);
+    background-image: radial-gradient(circle, rgba(139, 92, 246, 0.15) 1px, transparent 1px);
     background-size: 40px 40px;
   }
 }
 
-
-/* Lenis Smooth Scroll Base Styles */
-html.lenis, html.lenis body {
-  height: auto;
+/* GPU layer promotion for blur elements */
+[class*="blur-"] {
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 
-.lenis.lenis-smooth {
-  scroll-behavior: auto !important;
+/* CSS marquee animation for Partners */
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
-.lenis.lenis-smooth iframe {
-  pointer-events: none;
+/* CSS gradient animation for Contact */
+@keyframes gradientShift {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
