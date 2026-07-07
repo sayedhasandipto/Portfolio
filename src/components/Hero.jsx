@@ -12,7 +12,7 @@ import ScrollReveal from "./ScrollReveal";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-[#0A0A0A]">
+    <section className="relative min-h-[100svh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-transparent">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[16vw] md:text-[14vw] font-black text-white/[0.02] uppercase whitespace-nowrap select-none leading-none z-0 tracking-[0.2em]">
@@ -92,13 +92,13 @@ export default function Hero() {
 
             {/* Floating Tech Icons */}
             <div className="absolute inset-0 pointer-events-none z-30 hidden sm:block">
-              <div className="absolute top-10 -left-6 md:-left-10 text-brand bg-dark/80 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(139, 92, 246,0.1)]">
+              <div className="absolute top-10 -left-6 md:-left-10 text-brand bg-dark/80 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(139, 92, 246,0.1)] animate-float-1">
                 <SiReact className="w-6 h-6 md:w-8 md:h-8" />
               </div>
-              <div className="absolute bottom-20 -right-2 md:-right-5 text-brand bg-dark/80 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(139, 92, 246,0.1)]">
+              <div className="absolute bottom-20 -right-2 md:-right-5 text-brand bg-dark/80 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(139, 92, 246,0.1)] animate-float-2">
                 <SiNodedotjs className="w-6 h-6 md:w-8 md:h-8" />
               </div>
-              <div className="absolute top-1/2 -right-6 md:-right-12 text-brand bg-dark/80 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(139, 92, 246,0.1)]">
+              <div className="absolute top-1/2 -right-6 md:-right-12 text-brand bg-dark/80 p-3 md:p-4 rounded-xl md:rounded-2xl border border-white/10 shadow-[0_0_15px_rgba(139, 92, 246,0.1)] animate-float-3">
                 <SiMongodb className="w-6 h-6 md:w-8 md:h-8" />
               </div>
             </div>

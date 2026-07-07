@@ -1,5 +1,4 @@
 // Process — CSS hover effects, ScrollReveal for entrance animations
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import ScrollReveal from "./ScrollReveal";
 
 const steps = [
@@ -27,8 +26,7 @@ const steps = [
 
 export default function Process() {
   return (
-    <section className="py-24 px-6 bg-[#0A0A0A] relative overflow-hidden">
-      <InteractiveDotGrid />
+    <section className="py-24 px-6 bg-transparent relative overflow-hidden">
 
       <div className="max-w-7xl mx-auto relative z-10">
         <ScrollReveal delay={0}>

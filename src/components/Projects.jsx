@@ -1,6 +1,5 @@
 "use client";
 
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import { projects } from "@/data/projects";
 import Link from "next/link";
 import Image from "next/image";
@@ -11,11 +10,10 @@ export default function Projects() {
 
   return (
     <section
-      className="py-24 px-6 bg-[#0A0A0A] transition-colors relative overflow-hidden"
+      className="py-24 px-6 bg-transparent transition-colors relative overflow-hidden"
       id="projects"
       data-purpose="latest-projects"
     >
-      <InteractiveDotGrid />
 
       <div className="max-w-7xl mx-auto">
         <ScrollReveal delay={0}>

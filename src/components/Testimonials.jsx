@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from "react";
 import { FaQuoteLeft } from "react-icons/fa";
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import ScrollReveal from "./ScrollReveal";
 
 const testimonials = [
@@ -49,8 +48,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-24 px-6 relative bg-[#0A0A0A] overflow-hidden">
-      <InteractiveDotGrid />
+    <section className="py-24 px-6 relative bg-transparent overflow-hidden">
 
       <div className="max-w-4xl mx-auto text-center relative z-10">
         <ScrollReveal delay={0}>

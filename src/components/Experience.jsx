@@ -2,7 +2,6 @@
 
 // All scroll animations removed — static render
 import Link from "next/link";
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import ScrollReveal from "./ScrollReveal";
 
 export default function Experience() {
@@ -31,8 +30,7 @@ export default function Experience() {
   ];
 
   return (
-    <section id="experience" className="py-24 px-6 relative overflow-hidden bg-[#0A0A0A]" data-purpose="education-and-experience">
-      <InteractiveDotGrid />
+    <section id="experience" className="py-24 px-6 relative overflow-hidden bg-transparent" data-purpose="education-and-experience">
 
       <div className="max-w-7xl mx-auto">
         <ScrollReveal delay={0}>

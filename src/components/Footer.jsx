@@ -18,13 +18,13 @@ export default function Footer() {
   ];
 
   return (
-    <footer className="bg-[#0A0A0A] pt-20 pb-10 px-6 border-t border-white/10">
+    <footer className="bg-black/30 backdrop-blur-xl pt-20 pb-10 px-6 border-t border-white/10">
       <div className="max-w-7xl mx-auto">
         <div className="flex flex-col md:flex-row justify-between mb-20 gap-12 md:gap-20">
 
           <div className="md:w-1/3 text-center md:text-left">
             <Link href="/" className="flex items-center justify-center md:justify-start gap-2 mb-6 group cursor-pointer" data-cursor="hover">
-              <div className="w-8 h-8 bg-brand rounded-full flex items-center justify-center font-bold text-xs text-dark">
+              <div className="w-8 h-8 rounded-full flex items-center justify-center font-bold text-xs transition-all duration-300 bg-black text-white border border-white/20 group-hover:bg-white group-hover:text-black group-hover:scale-110">
                 SH
               </div>
               <span className="font-bold tracking-tighter text-xl text-white uppercase">Sayed Hasan Dipto</span>

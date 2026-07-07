@@ -5,7 +5,7 @@ import FluidBackground from "@/components/FluidBackground";
 
 export default function NotFound() {
   return (
-    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-[#0A0A0A]">
+    <div className="relative min-h-screen flex items-center justify-center overflow-hidden bg-transparent">
       <FluidBackground />
       
       <div className="text-center z-10 px-6">

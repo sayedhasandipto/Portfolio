@@ -2,7 +2,6 @@
 
 import Link from "next/link";
 import Image from "next/image";
-import InteractiveDotGrid from "./InteractiveDotGrid";
 
 export default function About() {
   const tools = [
@@ -13,8 +12,7 @@ export default function About() {
   ];
 
   return (
-    <section id="about" className="py-24 px-6 bg-[#0A0A0A] transition-colors relative overflow-hidden" data-purpose="intro-content">
-      <InteractiveDotGrid />
+    <section id="about" className="py-24 px-6 bg-transparent transition-colors relative overflow-hidden" data-purpose="intro-content">
 
       <div className="max-w-7xl mx-auto">
         <p className="text-center text-sm font-medium text-gray-400 mb-4 uppercase tracking-widest">

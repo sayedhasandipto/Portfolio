@@ -3,7 +3,6 @@
 // All GSAP scroll animations removed — static render only
 import Image from "next/image";
 import { FiMapPin, FiGlobe, FiCode, FiHeart, FiBriefcase, FiMail } from "react-icons/fi";
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import ScrollReveal from "./ScrollReveal";
 
 export default function Profile() {
@@ -12,7 +11,6 @@ export default function Profile() {
       id="about"
       className="py-24 px-6 bg-transparent relative overflow-hidden"
     >
-      <InteractiveDotGrid />
 
       <div className="max-w-7xl mx-auto">
         <ScrollReveal delay={0}>
@@ -26,130 +24,132 @@ export default function Profile() {
           </div>
         </ScrollReveal>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-4 h-full md:h-[800px]">
-          {/* Main Bio Card */}
-          <ScrollReveal delay={100} className="md:col-span-2 md:row-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-            <div className="h-full bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 flex flex-col justify-between group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-              <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className="w-16 h-16 rounded-2xl overflow-hidden border border-white/10 relative">
-                    <Image
-                      src="https://i.ibb.co/wZVXT6Yd/m1.png"
-                      alt="Sayed Hasan Dipto"
-                      fill
-                      sizes="64px"
-                      className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                    />
-                  </div>
-                  <div>
-                    <h3 className="text-xl font-bold text-white">Sayed Hasan Dipto</h3>
-                    <p className="text-gray-500 text-sm">Expert MERN Stack Developer</p>
-                  </div>
-                </div>
-                <p className="text-gray-300 leading-relaxed text-lg mb-6">
-                  I am a specialized <span className="text-white font-bold">MERN Stack Developer</span> with a passion for architecting scalable, high-performance web applications. By leveraging the power of MongoDB, Express.js, React, and Node.js, I build seamless end-to-end solutions that combine technical robustness with premium user experiences.
-                </p>
-              </div>
-              <div className="flex flex-wrap gap-3">
-                <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Creative Design</span>
-                <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Clean Code</span>
-                <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Fast Performance</span>
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Location Card */}
-          <ScrollReveal delay={200} className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-            <div className="h-full bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-              <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand group-hover:text-dark transition-all">
-                <FiMapPin size={24} />
-              </div>
-              <h4 className="text-white font-bold mb-1">Location</h4>
-              <p className="text-gray-400 text-sm">Dhaka, Bangladesh</p>
-            </div>
-          </ScrollReveal>
-
-          {/* Availability Card */}
-          <ScrollReveal delay={300} className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-            <div className="h-full bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 flex flex-col items-center justify-center text-center group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-              <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand group-hover:text-dark transition-all">
-                <FiBriefcase size={24} />
-              </div>
-              <h4 className="text-white font-bold mb-1">Availability</h4>
-              <p className="text-gray-400 text-sm">Open for Freelance / Full-time</p>
-            </div>
-          </ScrollReveal>
-
-          {/* Languages Card */}
-          <ScrollReveal delay={400} className="md:row-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-            <div className="h-full bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 flex flex-col group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-              <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:text-brand transition-colors">
-                <FiGlobe size={24} />
-              </div>
-              <h4 className="text-white font-bold text-lg mb-6">Languages</h4>
-              <ul className="space-y-6">
-                {[
-                  { name: "Bengali", level: "Native", width: "100%" },
-                  { name: "English", level: "Professional", width: "85%" },
-                  { name: "Hindi", level: "Conversational", width: "60%" },
-                ].map((lang) => (
-                  <li key={lang.name}>
-                    <div className="flex justify-between text-xs uppercase tracking-widest mb-2">
-                      <span className="text-white">{lang.name}</span>
-                      <span className="text-gray-500">{lang.level}</span>
+        <ScrollReveal delay={100}>
+          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-4 h-full md:h-[800px]">
+            {/* Main Bio Card */}
+            <div className="md:col-span-2 md:row-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
+              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-between group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
+                <div>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-16 h-16 rounded-2xl overflow-hidden border border-white/10 relative">
+                      <Image
+                        src="https://i.ibb.co/wZVXT6Yd/m1.png"
+                        alt="Sayed Hasan Dipto"
+                        fill
+                        sizes="64px"
+                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
+                      />
                     </div>
-                    <div className="h-[2px] w-full bg-white/5 overflow-hidden">
-                      <div className="h-full bg-brand" style={{ width: lang.width }} />
+                    <div>
+                      <h3 className="text-xl font-bold text-white">Sayed Hasan Dipto</h3>
+                      <p className="text-gray-500 text-sm">Expert MERN Stack Developer</p>
                     </div>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          </ScrollReveal>
-
-          {/* Tech Stack Card */}
-          <ScrollReveal delay={500} className="md:col-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-            <div className="h-full bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 flex flex-col group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-              <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:text-brand transition-colors">
-                  <FiCode size={20} />
+                  </div>
+                  <p className="text-gray-300 leading-relaxed text-lg mb-6">
+                    I am a specialized <span className="text-white font-bold">MERN Stack Developer</span> with a passion for architecting scalable, high-performance web applications. By leveraging the power of MongoDB, Express.js, React, and Node.js, I build seamless end-to-end solutions that combine technical robustness with premium user experiences.
+                  </p>
                 </div>
-                <h4 className="text-white font-bold text-lg">Tech Stack</h4>
-              </div>
-              <div className="flex flex-wrap gap-2">
-                {[
-                  "Next.js", "React.js", "Node.js", "MongoDB", "Express",
-                  "Tailwind CSS", "GSAP", "Framer Motion", "Figma", "Firebase", "PostgreSQL"
-                ].map((tech) => (
-                  <span
-                    key={tech}
-                    className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-300 hover:border-brand/50 hover:text-white transition-all cursor-default shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_15px_rgba(139, 92, 246,0.2)]"
-                  >
-                    {tech}
-                  </span>
-                ))}
-              </div>
-            </div>
-          </ScrollReveal>
-
-          {/* Contact CTA Card */}
-          <ScrollReveal delay={600} className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-            <div
-              className="h-full bg-brand rounded-3xl p-8 flex flex-col justify-between group cursor-pointer hover:scale-[0.98] shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_40px_rgba(139, 92, 246,0.4)] transition-all duration-500"
-              onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-            >
-              <div className="flex justify-between items-start">
-                <FiMail className="text-dark" size={32} />
-                <div className="w-10 h-10 rounded-full border border-dark/20 flex items-center justify-center">
-                  <span className="text-dark rotate-45">→</span>
+                <div className="flex flex-wrap gap-3">
+                  <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Creative Design</span>
+                  <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Clean Code</span>
+                  <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Fast Performance</span>
                 </div>
               </div>
-              <div>
-                <h4 className="text-dark font-black text-2xl uppercase leading-none">Get In<br />Touch</h4>
+            </div>
+
+            {/* Location Card */}
+            <div className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
+              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
+                <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand group-hover:text-dark transition-all">
+                  <FiMapPin size={24} />
+                </div>
+                <h4 className="text-white font-bold mb-1">Location</h4>
+                <p className="text-gray-400 text-sm">Dhaka, Bangladesh</p>
               </div>
             </div>
-          </ScrollReveal>
-        </div>
+
+            {/* Availability Card */}
+            <div className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
+              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
+                <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand group-hover:text-dark transition-all">
+                  <FiBriefcase size={24} />
+                </div>
+                <h4 className="text-white font-bold mb-1">Availability</h4>
+                <p className="text-gray-400 text-sm">Open for Freelance / Full-time</p>
+              </div>
+            </div>
+
+            {/* Languages Card */}
+            <div className="md:row-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
+              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
+                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:text-brand transition-colors">
+                  <FiGlobe size={24} />
+                </div>
+                <h4 className="text-white font-bold text-lg mb-6">Languages</h4>
+                <ul className="space-y-6">
+                  {[
+                    { name: "Bengali", level: "Native", width: "100%" },
+                    { name: "English", level: "Professional", width: "85%" },
+                    { name: "Hindi", level: "Conversational", width: "60%" },
+                  ].map((lang) => (
+                    <li key={lang.name}>
+                      <div className="flex justify-between text-xs uppercase tracking-widest mb-2">
+                        <span className="text-white">{lang.name}</span>
+                        <span className="text-gray-500">{lang.level}</span>
+                      </div>
+                      <div className="h-[2px] w-full bg-white/5 overflow-hidden">
+                        <div className="h-full bg-brand" style={{ width: lang.width }} />
+                      </div>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
+            {/* Tech Stack Card */}
+            <div className="md:col-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
+              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
+                <div className="flex items-center gap-3 mb-6">
+                  <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:text-brand transition-colors">
+                    <FiCode size={20} />
+                  </div>
+                  <h4 className="text-white font-bold text-lg">Tech Stack</h4>
+                </div>
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    "Next.js", "React.js", "Node.js", "MongoDB", "Express",
+                    "Tailwind CSS", "GSAP", "Framer Motion", "Figma", "Firebase", "PostgreSQL"
+                  ].map((tech) => (
+                    <span
+                      key={tech}
+                      className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-300 hover:border-brand/50 hover:text-white transition-all cursor-default shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_15px_rgba(139, 92, 246,0.2)]"
+                    >
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* Contact CTA Card */}
+            <div className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
+              <div
+                className="h-full bg-brand rounded-3xl p-8 flex flex-col justify-between group cursor-pointer hover:scale-[0.98] shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_40px_rgba(139, 92, 246,0.4)] transition-all duration-500"
+                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
+              >
+                <div className="flex justify-between items-start">
+                  <FiMail className="text-dark" size={32} />
+                  <div className="w-10 h-10 rounded-full border border-dark/20 flex items-center justify-center">
+                    <span className="text-dark rotate-45">→</span>
+                  </div>
+                </div>
+                <div>
+                  <h4 className="text-dark font-black text-2xl uppercase leading-none">Get In<br />Touch</h4>
+                </div>
+              </div>
+            </div>
+          </div>
+        </ScrollReveal>
       </div>
     </section>
   );

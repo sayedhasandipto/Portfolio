@@ -1,5 +1,4 @@
 // Partners — infinite CSS marquee with pause-on-hover, no JS overhead
-import InteractiveDotGrid from "./InteractiveDotGrid";
 
 const partners = [
   "HTML5", "CSS3", "JavaScript", "React.js", "Next.js", "Tailwind CSS",
@@ -13,10 +12,9 @@ const items = [...partners, ...partners];
 export default function Partners() {
   return (
     <section
-      className="py-20 bg-[#0A0A0A] overflow-hidden border-y border-white/5 relative"
+      className="py-20 bg-transparent overflow-hidden border-y border-white/5 relative"
       data-purpose="trusted-partners"
     >
-      <InteractiveDotGrid />
 
       <div className="max-w-7xl mx-auto px-6 mb-12 relative z-10">
         <h3 className="text-center font-serif text-3xl italic text-gray-400">
@@ -39,7 +37,7 @@ export default function Partners() {
             <div
               key={index}
               data-cursor="hover"
-              className="mx-3 bg-[#0A0A0A] px-10 py-6 rounded-2xl flex items-center justify-center border border-white/8 hover:border-brand/50 hover:bg-white/[0.04] hover:shadow-[0_0_20px_rgba(139, 92, 246,0.1)] transition-all duration-300 group/item min-w-fit flex-shrink-0"
+              className="mx-3 bg-black/30 backdrop-blur-xl px-10 py-6 rounded-2xl flex items-center justify-center border border-white/8 hover:border-brand/50 hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(139, 92, 246,0.1)] transition-all duration-300 group/item min-w-fit flex-shrink-0"
               style={{ animationPlayState: "inherit" }}
             >
               <span className="font-bold text-xl opacity-25 group-hover/item:opacity-100 group-hover/item:text-brand transition-all duration-300 text-white whitespace-nowrap">

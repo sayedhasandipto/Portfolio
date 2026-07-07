@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import ScrollReveal from "./ScrollReveal";
 
 function CountUp({ target, suffix = "", duration = 1500 }) {
@@ -59,8 +58,7 @@ export default function Stats() {
   ];
 
   return (
-    <section className="py-24 bg-[#0A0A0A] border-y border-white/5 relative overflow-hidden">
-      <InteractiveDotGrid />
+    <section className="py-24 bg-transparent border-y border-white/5 relative overflow-hidden">
 
       <div className="max-w-7xl mx-auto px-6">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 md:gap-6">

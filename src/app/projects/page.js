@@ -18,7 +18,7 @@ function IndividualProjectCard({ project }) {
         className="group project-card cursor-pointer relative transition-transform duration-500 ease-out hover:-translate-y-2 h-full flex flex-col"
         data-cursor="hover"
       >
-        <div className="bg-[#0A0A0A]/50 border border-white/10 rounded-3xl p-4 shadow-sm hover:shadow-[0_0_40px_rgba(139, 92, 246,0.15)] transition-all duration-500 overflow-hidden mb-6 hover:border-brand/40 flex-shrink-0">
+        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-4 shadow-sm hover:shadow-[0_0_40px_rgba(139, 92, 246,0.15)] transition-all duration-500 overflow-hidden mb-6 hover:border-brand/40 flex-shrink-0">
           <div className="bg-white/5 rounded-2xl aspect-[4/3] overflow-hidden relative border border-white/5">
             <Image
               alt={project.title}

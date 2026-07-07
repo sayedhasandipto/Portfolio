@@ -1,7 +1,14 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useGSAP } from "@gsap/react";
 import { twMerge } from "tailwind-merge";
+
+if (typeof window !== "undefined") {
+  gsap.registerPlugin(ScrollTrigger, useGSAP);
+}
 
 export default function ScrollReveal({ 
   children, 
@@ -9,62 +16,61 @@ export default function ScrollReveal({
   direction = "up", // 'up', 'left', 'right', 'none'
   delay = 0 
 }) {
-  const [isVisible, setIsVisible] = useState(false);
-  const ref = useRef(null);
+  const containerRef = useRef(null);
 
-  useEffect(() => {
-    const currentRef = ref.current;
-    
-    // Fallback if IntersectionObserver is not supported (very old browsers)
-    if (typeof IntersectionObserver === "undefined") {
-      setIsVisible(true);
-      return;
+  useGSAP(() => {
+    const el = containerRef.current;
+    if (!el) return;
+
+    let x = 0;
+    let y = 0;
+    let scale = 0.9;
+
+    switch (direction) {
+      case "up":
+        y = 120;
+        break;
+      case "left":
+        x = -120;
+        break;
+      case "right":
+        x = 120;
+        break;
+      case "none":
+        break;
+      default:
+        y = 120;
     }
 
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Only trigger once when it comes into view
-        if (entry.isIntersecting) {
-          setIsVisible(true);
-          observer.unobserve(entry.target);
-        }
+    gsap.fromTo(
+      el,
+      {
+        opacity: 0,
+        x: x,
+        y: y,
+        scale: scale,
+        filter: "blur(15px)",
       },
       {
-        root: null,
-        rootMargin: "0px 0px -10% 0px", // Trigger slightly before it hits the bottom
-        threshold: 0.1,
+        opacity: 1,
+        x: 0,
+        y: 0,
+        scale: 1,
+        filter: "blur(0px)",
+        duration: 1.5,
+        delay: delay / 1000,
+        ease: "power3.out",
+        scrollTrigger: {
+          trigger: el,
+          start: "top 85%", // Appears like magic exactly when scrolled into view
+          toggleActions: "play none none reverse", // Plays when scrolling down, reverses going up
+        },
       }
     );
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
-  }, []);
-
-  // Determine base starting classes based on direction
-  const baseClasses = {
-    up: "translate-y-16 opacity-0 blur-[10px] scale-[0.95]",
-    left: "-translate-x-16 opacity-0 blur-[10px] scale-[0.95]",
-    right: "translate-x-16 opacity-0 blur-[10px] scale-[0.95]",
-    none: "opacity-0 blur-[10px] scale-[0.95]",
-  };
+  }, { scope: containerRef });
 
   return (
-    <div
-      ref={ref}
-      className={twMerge(
-        "transition-all duration-[1200ms] ease-[cubic-bezier(0.16,1,0.3,1)] will-change-[transform,opacity,filter]",
-        isVisible ? "translate-y-0 translate-x-0 opacity-100 blur-0 scale-100" : baseClasses[direction],
-        className
-      )}
-      style={{ transitionDelay: `${delay}ms` }}
-    >
+    <div ref={containerRef} className={twMerge("opacity-0 will-change-[transform,opacity,filter]", className)}>
       {children}
     </div>
   );

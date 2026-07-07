@@ -2,7 +2,6 @@
 
 // All GSAP/framer-motion animations removed — static render
 import { useState } from "react";
-import InteractiveDotGrid from "./InteractiveDotGrid";
 import ScrollReveal from "./ScrollReveal";
 
 export default function Contact() {
@@ -39,9 +38,8 @@ export default function Contact() {
 
   return (
     <section className="p-4 md:p-12 relative overflow-hidden bg-transparent" id="contact">
-      <InteractiveDotGrid />
 
-      <ScrollReveal delay={0} className="max-w-7xl mx-auto bg-[#0A0A0A] border border-white/5 rounded-3xl md:rounded-[3rem] p-6 md:p-20 text-white flex flex-col md:flex-row items-center gap-12 md:gap-16 relative z-10 shadow-2xl hover:border-brand/30 transition-all duration-500">
+      <ScrollReveal delay={0} className="max-w-7xl mx-auto bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl md:rounded-[3rem] p-6 md:p-20 text-white flex flex-col md:flex-row items-center gap-12 md:gap-16 relative z-10 shadow-2xl hover:border-brand/50 transition-all duration-500">
         <div className="md:w-3/5 text-center md:text-left">
           <h2 className="text-3xl md:text-6xl font-bold leading-tight uppercase text-white drop-shadow-lg">
             Let&apos;s work together and create something extraordinary!

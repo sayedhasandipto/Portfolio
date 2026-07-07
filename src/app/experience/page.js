@@ -101,56 +101,66 @@ export default function ExperiencePage() {
                 </p>
               </div>
 
-              {/* Experience Cards */}
-              <div className="space-y-12 md:space-y-16">
-                {experiences.map((exp, index) => (
-                  <div key={exp.id} className="w-full md:w-[80%] mx-auto group">
-                    <div className="bg-[#0A0A0A] border border-white/5 rounded-3xl p-8 md:p-12 hover:border-brand/30 transition-all duration-500 relative">
-                      {/* Type Badge */}
-                      <div className="absolute top-8 right-8 flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-gray-500 bg-white/5 px-3 py-1 rounded-full border border-white/10">
-                        {exp.type === "Work" ? <FiBriefcase /> : exp.type === "Design" ? <FiAward /> : <FiCode />}
-                        {exp.type}
-                      </div>
+              {/* Timeline Container */}
+              <div className="relative max-w-5xl mx-auto py-10 mt-10">
+                {/* Vertical Line */}
+                <div className="absolute left-6 md:left-1/2 top-0 bottom-0 w-[2px] bg-white/10 md:-translate-x-1/2 rounded-full" />
 
-                      <div className="mb-8">
-                        <span className="text-brand font-bold text-sm block mb-2">{exp.period}</span>
-                        <h3 className="text-2xl md:text-3xl font-bold text-white mb-1 group-hover:text-brand transition-colors">{exp.title}</h3>
-                        <p className="text-gray-400 font-medium flex items-center gap-2">
-                          <FiMapPin className="text-brand/50" /> {exp.company}
-                        </p>
-                      </div>
+                <div className="space-y-16 md:space-y-24">
+                  {experiences.map((exp, index) => {
+                    const isEven = index % 2 === 0;
+                    return (
+                      <div key={exp.id} className="relative flex flex-col md:flex-row items-center w-full group">
+                        {/* Timeline Dot */}
+                        <div className="absolute left-6 md:left-1/2 w-5 h-5 rounded-full bg-[#0A0A0A] border-[4px] border-brand md:-translate-x-1/2 z-10 group-hover:scale-150 group-hover:bg-brand group-hover:shadow-[0_0_20px_rgba(139,92,246,0.6)] transition-all duration-500 top-12 md:top-1/2 md:-translate-y-1/2 -translate-x-[9px] md:-translate-x-1/2" />
 
-                      <p className="text-gray-300 leading-relaxed mb-8 text-lg">{exp.description}</p>
+                        {/* Card Container (Left or Right) */}
+                        <div className={`w-full md:w-1/2 pl-16 md:pl-0 ${isEven ? 'md:pr-16 flex md:justify-end' : 'md:pl-16 flex md:justify-start md:ml-auto'}`}>
+                          <div className="w-full text-left bg-black/30 backdrop-blur-xl border border-white/10 shadow-2xl rounded-3xl p-8 hover:border-brand/50 hover:shadow-[0_0_30px_rgba(139,92,246,0.15)] transition-all duration-500 relative">
+                            
+                            {/* Type Badge */}
+                            <div className="absolute top-6 right-6 flex items-center gap-2 text-[10px] uppercase tracking-widest font-bold text-gray-500 bg-white/5 px-3 py-1 rounded-full border border-white/10 hidden sm:flex">
+                              {exp.type === "Work" ? <FiBriefcase /> : exp.type === "Design" ? <FiAward /> : <FiCode />}
+                              {exp.type}
+                            </div>
 
-                      <div className="space-y-4 mb-8">
-                        <h4 className="text-white font-bold text-sm uppercase tracking-widest flex items-center gap-2">
-                          <FiAward className="text-brand" /> Key Achievements
-                        </h4>
-                        <ul className="space-y-3">
-                          {exp.achievements.map((ach, i) => (
-                            <li key={i} className="flex items-start gap-3 text-sm text-gray-400">
-                              <span className="w-1.5 h-1.5 rounded-full bg-brand mt-1.5 shrink-0" />
-                              {ach}
-                            </li>
-                          ))}
-                        </ul>
-                      </div>
+                            <div className="mb-6">
+                              <span className="text-brand font-bold text-xs uppercase tracking-widest block mb-2">{exp.period}</span>
+                              <h3 className="text-xl md:text-2xl font-bold text-white mb-1 group-hover:text-brand transition-colors pr-0 sm:pr-24">{exp.title}</h3>
+                              <p className="text-gray-400 text-sm font-medium flex items-center gap-2 mt-2">
+                                <FiMapPin className="text-brand/50 shrink-0" /> {exp.company}
+                              </p>
+                            </div>
 
-                      <div className="pt-8 border-t border-white/5">
-                        <h4 className="text-white font-bold text-sm uppercase tracking-widest flex items-center gap-2 mb-4">
-                          <FiCode className="text-brand" /> Tech Stack
-                        </h4>
-                        <div className="flex flex-wrap gap-2">
-                          {exp.tech.map((t, i) => (
-                            <span key={i} className="text-[10px] font-bold px-3 py-1 bg-white/5 border border-white/10 rounded-full text-gray-300 group-hover:border-brand/50 transition-colors">
-                              {t}
-                            </span>
-                          ))}
+                            <p className="text-gray-300 leading-relaxed mb-8 text-sm">{exp.description}</p>
+
+                            <div className="space-y-4 mb-6">
+                              <h4 className="text-white font-bold text-xs uppercase tracking-widest flex items-center gap-2">
+                                <FiAward className="text-brand" /> Key Achievements
+                              </h4>
+                              <ul className="space-y-3">
+                                {exp.achievements.map((ach, i) => (
+                                  <li key={i} className="flex items-start gap-3 text-sm text-gray-400 leading-relaxed">
+                                    <span className="w-1.5 h-1.5 rounded-full bg-brand mt-1.5 shrink-0" />
+                                    <span>{ach}</span>
+                                  </li>
+                                ))}
+                              </ul>
+                            </div>
+
+                            <div className="pt-6 border-t border-white/5 flex flex-wrap gap-2">
+                              {exp.tech.map((t, i) => (
+                                <span key={i} className="text-[10px] font-bold px-3 py-1.5 bg-white/5 border border-white/10 rounded-full text-gray-300 group-hover:border-brand/50 transition-colors">
+                                  {t}
+                                </span>
+                              ))}
+                            </div>
+                          </div>
                         </div>
                       </div>
-                    </div>
-                  </div>
-                ))}
+                    );
+                  })}
+                </div>
               </div>
             </div>
           </main>

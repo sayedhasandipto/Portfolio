@@ -6,15 +6,15 @@ export default function Preloader({ onComplete }) {
   const [phase, setPhase] = useState(0); // 0 = reveal text, 1 = split screen, 2 = exit
 
   useEffect(() => {
-    // 1. Text stays for 2.2 seconds
+    // 1. Text stays for 0.5 seconds
     const t1 = setTimeout(() => {
       setPhase(1);
-    }, 2200);
+    }, 500);
 
     // 2. Wait for split animation to finish, then complete
     const t2 = setTimeout(() => {
       onComplete();
-    }, 3200);
+    }, 1200);
 
     return () => {
       clearTimeout(t1);
