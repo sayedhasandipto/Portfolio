@@ -76,7 +76,7 @@ export default function Hero() {
           <ScrollReveal direction="up" delay={300} className="w-full md:w-1/2 flex justify-center md:justify-end relative mt-8 md:mt-0">
             <div className="relative w-full max-w-[320px] md:max-w-[450px] aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden group border border-white/10 shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_50px_rgba(139, 92, 246,0.15)] hover:scale-[1.02] hover:-rotate-1 transition-all duration-500 hover:border-brand/40">
               <Image
-                src="https://i.ibb.co/wZVXT6Yd/m1.png"
+                src="https://i.ibb.co/tPMj0tRG/potrate.png"
                 alt="Portrait"
                 fill
                 priority
