@@ -31,20 +31,28 @@ function IndividualProjectCard({ project }) {
           </div>
         </div>
 
-        <div className="flex-grow flex flex-col">
-          <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-2 block group-hover:text-brand transition-colors">
-            {project.category}
-          </span>
-          <h3 className="text-2xl font-bold mb-4 group-hover:text-brand transition-colors text-white uppercase tracking-tighter">
-            {project.title}
-          </h3>
+        <div className="flex-grow flex flex-col justify-between">
+          <div>
+            <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-2 block group-hover:text-brand transition-colors">
+              {project.category}
+            </span>
+            <h3 className="text-2xl font-bold mb-4 group-hover:text-brand transition-colors text-white uppercase tracking-tighter">
+              {project.title}
+            </h3>
 
-          <div className="flex gap-2 flex-wrap mt-auto">
-            {project.tags.map((tag, i) => (
-              <span key={i} className="text-[10px] font-bold px-3 py-1 bg-white/5 border border-white/10 rounded-full group-hover:border-white/20 transition-colors text-white/70">
-                {tag}
-              </span>
-            ))}
+            <div className="flex gap-2 flex-wrap mt-2">
+              {project.tags.map((tag, i) => (
+                <span key={i} className="text-[10px] font-bold px-3 py-1 bg-white/5 border border-white/10 rounded-full group-hover:border-white/20 transition-colors text-white/70">
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-6 flex items-center gap-2 text-[10px] font-black text-brand uppercase tracking-[0.2em] opacity-80 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300">
+            <span>View Details</span>
+            <span>→
+            </span>
           </div>
         </div>
       </div>

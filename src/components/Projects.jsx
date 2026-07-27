@@ -65,20 +65,27 @@ function ProjectCard({ project }) {
           </div>
         </div>
 
-        <div>
-          <h3 className="text-xl font-bold mb-3 group-hover:text-brand transition-colors text-white">
-            {project.title}
-          </h3>
+        <div className="flex flex-col justify-between">
+          <div>
+            <h3 className="text-xl font-bold mb-3 group-hover:text-brand transition-colors text-white">
+              {project.title}
+            </h3>
 
-          <div className="flex gap-2 flex-wrap">
-            {project.tags.map((tag, i) => (
-              <span
-                key={i}
-                className="text-[10px] font-bold px-3 py-1 bg-white/5 border border-white/10 rounded-full group-hover:border-brand transition-colors text-white"
-              >
-                {tag}
-              </span>
-            ))}
+            <div className="flex gap-2 flex-wrap">
+              {project.tags.map((tag, i) => (
+                <span
+                  key={i}
+                  className="text-[10px] font-bold px-3 py-1 bg-white/5 border border-white/10 rounded-full group-hover:border-brand transition-colors text-white"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
+          </div>
+          
+          <div className="mt-5 flex items-center gap-2 text-[10px] font-black text-brand uppercase tracking-[0.2em] opacity-80 group-hover:opacity-100 group-hover:translate-x-1.5 transition-all duration-300">
+            <span>View Details</span>
+            <span>→</span>
           </div>
         </div>
       </div>

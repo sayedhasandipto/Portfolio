@@ -1,128 +1,119 @@
 "use client";
 
-// All GSAP scroll animations removed — static render only
 import Image from "next/image";
-import { FiMapPin, FiGlobe, FiCode, FiHeart, FiBriefcase, FiMail } from "react-icons/fi";
 import ScrollReveal from "./ScrollReveal";
+
+// ── Highlight badge data ──────────────────────────────────────────────────────
+const highlights = [
+  {
+    emoji: "🚀",
+    title: "Full-Stack MERN Developer",
+    desc: "Building end-to-end web apps from database to UI with the MERN ecosystem.",
+    accent: "from-violet-600/20 to-brand/5",
+    border: "hover:border-brand/50",
+  },
+  {
+    emoji: "🎨",
+    title: "UI/UX & Graphic Design",
+    desc: "Crafting pixel-perfect, accessible interfaces that users love to interact with.",
+    accent: "from-fuchsia-600/20 to-purple-600/5",
+    border: "hover:border-fuchsia-500/50",
+  },
+  {
+    emoji: "🎸",
+    title: "Music & Creative Thinker",
+    desc: "Guitar, ukulele, anime & art keep my creative spark alive outside the IDE.",
+    accent: "from-indigo-600/20 to-blue-600/5",
+    border: "hover:border-indigo-500/50",
+  },
+  {
+    emoji: "💡",
+    title: "Problem Solver & Learner",
+    desc: "Turning complex real-world challenges into elegant, scalable digital solutions.",
+    accent: "from-emerald-600/20 to-teal-600/5",
+    border: "hover:border-emerald-500/50",
+  },
+];
+
+// ── Paragraph content ─────────────────────────────────────────────────────────
+const bio = [
+  {
+    label: "My Journey",
+    text: "It all started with a simple spark — pure curiosity about how technology and the internet actually worked. That curiosity quickly evolved into a deep passion for problem-solving, which led me to specialize as a MERN Stack Developer & UI/UX Designer. I'm committed to writing clean, maintainable code and building modern web experiences that are as performant as they are beautiful.",
+  },
+  {
+    label: "What I Love Building",
+    text: "I thrive on building high-performance, full-stack web applications that pair a rock-solid backend with sleek, accessible user interfaces. Whether it's architecting a scalable MongoDB schema, crafting a pixel-perfect React component, or designing an intuitive user flow — I find immense joy in transforming complex real-world problems into simple, elegant digital solutions.",
+  },
+  {
+    label: "Beyond the Code",
+    text: "When I step away from the keyboard, I'm usually picking up my guitar or ukulele, exploring the latest UI/UX design trends, watching anime, or sharing what I know by teaching others. This creative blend keeps my thinking fresh, my designs human-centered, and my passion for building things that matter.",
+  },
+];
+
+// ── Tech Stack pills ──────────────────────────────────────────────────────────
+const stack = [
+  "Next.js", "React.js", "Node.js", "MongoDB",
+  "Express", "Tailwind CSS", "Figma", "GSAP",
+];
 
 export default function Profile() {
   return (
     <section
       id="about"
-      className="py-24 px-6 bg-transparent relative overflow-hidden"
+      className="py-28 px-6 bg-transparent relative overflow-hidden"
     >
-
+      {/* ── Section wrapper ─────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto">
+
+        {/* ── Section label + heading ─────────────────────────── */}
         <ScrollReveal delay={0}>
-          <div className="text-center mb-16">
-            <p className="text-brand text-xs uppercase tracking-[0.3em] font-bold mb-4">
+          <div className="text-center mb-20">
+            <p className="text-brand text-[10px] uppercase tracking-[0.4em] font-black mb-4">
               Curriculum Vitae
             </p>
-            <h2 className="text-4xl md:text-6xl font-serif italic text-white">
-              About Me
+            <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
+              About{" "}
+              <span className="italic font-serif text-brand font-bold">Me</span>
             </h2>
+            <p className="mt-5 text-gray-400 text-base md:text-lg font-light max-w-xl mx-auto">
+              Driven by Passion, Fueled by Code &amp; Creativity.
+            </p>
           </div>
         </ScrollReveal>
 
-        <ScrollReveal delay={100}>
-          <div className="grid grid-cols-1 md:grid-cols-4 md:grid-rows-3 gap-4 h-full md:h-[800px]">
-            {/* Main Bio Card */}
-            <div className="md:col-span-2 md:row-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col justify-between group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-                <div>
-                  <div className="flex items-center gap-4 mb-6">
-                    <div className="w-16 h-16 rounded-2xl overflow-hidden border border-white/10 relative">
-                      <Image
-                        src="https://i.ibb.co/wZVXT6Yd/m1.png"
-                        alt="Sayed Hasan Dipto"
-                        fill
-                        sizes="64px"
-                        className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700"
-                      />
-                    </div>
-                    <div>
-                      <h3 className="text-xl font-bold text-white">Sayed Hasan Dipto</h3>
-                      <p className="text-gray-500 text-sm">Expert MERN Stack Developer</p>
-                    </div>
+        {/* ── Two-column layout ────────────────────────────────── */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start mb-20">
+
+          {/* Left — Bio paragraphs ─────────────────────────────── */}
+          <ScrollReveal direction="left" delay={100}>
+            <div className="space-y-10">
+              {bio.map((item) => (
+                <div key={item.label} className="group">
+                  {/* Label */}
+                  <div className="flex items-center gap-3 mb-3">
+                    <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
+                    <span className="text-brand font-black text-[10px] uppercase tracking-[0.35em]">
+                      {item.label}
+                    </span>
                   </div>
-                  <p className="text-gray-300 leading-relaxed text-lg mb-6">
-                    I am a specialized <span className="text-white font-bold">MERN Stack Developer</span> with a passion for architecting scalable, high-performance web applications. By leveraging the power of MongoDB, Express.js, React, and Node.js, I build seamless end-to-end solutions that combine technical robustness with premium user experiences.
+                  {/* Text */}
+                  <p className="text-gray-300 leading-[1.85] text-sm md:text-[15px]">
+                    {item.text}
                   </p>
                 </div>
-                <div className="flex flex-wrap gap-3">
-                  <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Creative Design</span>
-                  <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Clean Code</span>
-                  <span className="bg-white/5 text-white/70 text-[10px] uppercase tracking-widest px-4 py-2 rounded-full border border-white/10 group-hover:border-brand/50 transition-colors">Fast Performance</span>
-                </div>
-              </div>
-            </div>
+              ))}
 
-            {/* Location Card */}
-            <div className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-                <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand group-hover:text-dark transition-all">
-                  <FiMapPin size={24} />
-                </div>
-                <h4 className="text-white font-bold mb-1">Location</h4>
-                <p className="text-gray-400 text-sm">Dhaka, Bangladesh</p>
-              </div>
-            </div>
-
-            {/* Availability Card */}
-            <div className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col items-center justify-center text-center group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-                <div className="w-12 h-12 rounded-full bg-brand/10 flex items-center justify-center mb-4 group-hover:bg-brand group-hover:text-dark transition-all">
-                  <FiBriefcase size={24} />
-                </div>
-                <h4 className="text-white font-bold mb-1">Availability</h4>
-                <p className="text-gray-400 text-sm">Open for Freelance / Full-time</p>
-              </div>
-            </div>
-
-            {/* Languages Card */}
-            <div className="md:row-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-                <div className="w-12 h-12 rounded-xl bg-white/5 flex items-center justify-center mb-6 group-hover:text-brand transition-colors">
-                  <FiGlobe size={24} />
-                </div>
-                <h4 className="text-white font-bold text-lg mb-6">Languages</h4>
-                <ul className="space-y-6">
-                  {[
-                    { name: "Bengali", level: "Native", width: "100%" },
-                    { name: "English", level: "Professional", width: "85%" },
-                    { name: "Hindi", level: "Conversational", width: "60%" },
-                  ].map((lang) => (
-                    <li key={lang.name}>
-                      <div className="flex justify-between text-xs uppercase tracking-widest mb-2">
-                        <span className="text-white">{lang.name}</span>
-                        <span className="text-gray-500">{lang.level}</span>
-                      </div>
-                      <div className="h-[2px] w-full bg-white/5 overflow-hidden">
-                        <div className="h-full bg-brand" style={{ width: lang.width }} />
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-
-            {/* Tech Stack Card */}
-            <div className="md:col-span-2 hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-              <div className="h-full bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-8 flex flex-col group shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] hover:border-brand/50 transition-all duration-500">
-                <div className="flex items-center gap-3 mb-6">
-                  <div className="w-10 h-10 rounded-lg bg-white/5 flex items-center justify-center group-hover:text-brand transition-colors">
-                    <FiCode size={20} />
-                  </div>
-                  <h4 className="text-white font-bold text-lg">Tech Stack</h4>
-                </div>
+              {/* ── Tech-stack pills ──────────────────────────── */}
+              <div>
+                <span className="text-[10px] font-black uppercase tracking-[0.35em] text-gray-500 block mb-4">
+                  Core Stack
+                </span>
                 <div className="flex flex-wrap gap-2">
-                  {[
-                    "Next.js", "React.js", "Node.js", "MongoDB", "Express",
-                    "Tailwind CSS", "GSAP", "Framer Motion", "Figma", "Firebase", "PostgreSQL"
-                  ].map((tech) => (
+                  {stack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-4 py-2 bg-white/5 border border-white/10 rounded-xl text-xs text-gray-300 hover:border-brand/50 hover:text-white transition-all cursor-default shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_15px_rgba(139, 92, 246,0.2)]"
+                      className="px-4 py-2 text-[11px] font-bold uppercase tracking-widest bg-white/[0.04] border border-white/10 rounded-full text-gray-300 hover:border-brand/60 hover:text-white hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300 cursor-default"
                     >
                       {tech}
                     </span>
@@ -130,26 +121,102 @@ export default function Profile() {
                 </div>
               </div>
             </div>
+          </ScrollReveal>
 
-            {/* Contact CTA Card */}
-            <div className="hover:scale-[1.01] hover:-translate-y-0.5 transition-all duration-300">
-              <div
-                className="h-full bg-brand rounded-3xl p-8 flex flex-col justify-between group cursor-pointer hover:scale-[0.98] shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_40px_rgba(139, 92, 246,0.4)] transition-all duration-500"
-                onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })}
-              >
-                <div className="flex justify-between items-start">
-                  <FiMail className="text-dark" size={32} />
-                  <div className="w-10 h-10 rounded-full border border-dark/20 flex items-center justify-center">
-                    <span className="text-dark rotate-45">→</span>
-                  </div>
+          {/* Right — Portrait + quick stats ───────────────────── */}
+          <ScrollReveal direction="right" delay={200}>
+            <div className="flex flex-col gap-6">
+
+              {/* Portrait card */}
+              <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-white/10 hover:border-brand/40 hover:shadow-[0_0_50px_rgba(139,92,246,0.15)] transition-all duration-500">
+                <Image
+                  src="https://i.ibb.co/tPMj0tRG/potrate.png"
+                  alt="Sayed Hasan Dipto"
+                  fill
+                  sizes="(max-width: 1024px) 100vw, 50vw"
+                  className="object-cover object-top grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                  priority
+                />
+                {/* Gradient overlay */}
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent opacity-80 pointer-events-none" />
+
+                {/* Name badge */}
+                <div className="absolute bottom-6 left-6 right-6 z-10">
+                  <p className="text-brand font-black text-2xl md:text-3xl uppercase leading-none tracking-tighter">
+                    Sayed Hasan<br />Dipto
+                  </p>
+                  <p className="text-white/50 text-xs uppercase tracking-[0.25em] mt-2">
+                    MERN Stack Developer &amp; UI/UX Designer
+                  </p>
+                  <div className="h-[2px] w-10 bg-brand mt-3" />
                 </div>
-                <div>
-                  <h4 className="text-dark font-black text-2xl uppercase leading-none">Get In<br />Touch</h4>
+
+                {/* Available badge */}
+                <div className="absolute top-5 right-5 flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full px-3 py-1.5 z-10">
+                  <span className="relative flex h-2 w-2">
+                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                  </span>
+                  <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">
+                    Available
+                  </span>
                 </div>
               </div>
+
+              {/* Quick stats row */}
+              <div className="grid grid-cols-3 gap-3">
+                {[
+                  { value: "3+", label: "Years Exp." },
+                  { value: "10+", label: "Projects" },
+                  { value: "5★", label: "Avg. Rating" },
+                ].map((stat) => (
+                  <div
+                    key={stat.label}
+                    className="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center hover:border-brand/40 hover:bg-white/[0.07] transition-all duration-300 group"
+                  >
+                    <span className="text-2xl font-black text-white group-hover:text-brand transition-colors">
+                      {stat.value}
+                    </span>
+                    <span className="text-[9px] font-bold uppercase tracking-widest text-gray-500 mt-1">
+                      {stat.label}
+                    </span>
+                  </div>
+                ))}
+              </div>
+
             </div>
-          </div>
-        </ScrollReveal>
+          </ScrollReveal>
+        </div>
+
+        {/* ── Highlight cards grid ──────────────────────────────── */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+          {highlights.map((card, i) => (
+            <ScrollReveal key={card.title} delay={i * 80} direction="up">
+              <div
+                className={`relative h-full bg-gradient-to-br ${card.accent} bg-black/30 backdrop-blur-xl border border-white/[0.08] ${card.border} rounded-3xl p-7 flex flex-col gap-4 group transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.12)] hover:-translate-y-1 cursor-default`}
+              >
+                {/* Emoji icon */}
+                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                  {card.emoji}
+                </div>
+
+                {/* Content */}
+                <div>
+                  <h4 className="text-white font-bold text-base mb-2 group-hover:text-brand transition-colors duration-300">
+                    {card.title}
+                  </h4>
+                  <p className="text-gray-400 text-sm leading-relaxed">
+                    {card.desc}
+                  </p>
+                </div>
+
+                {/* Subtle corner accent line */}
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-b-3xl bg-gradient-to-r from-transparent via-brand/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+              </div>
+            </ScrollReveal>
+          ))}
+        </div>
+
       </div>
     </section>
   );

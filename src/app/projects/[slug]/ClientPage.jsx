@@ -125,7 +125,7 @@ export default function ProjectDetail() {
                             className="flex items-center gap-3 border border-white/20 text-white px-7 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:border-brand hover:text-brand transition-all duration-300"
                           >
                             <FaGithub size={12} />
-                            Source
+                            GitHub Client Repo
                           </Link>
                         )}
                       </div>
@@ -208,6 +208,66 @@ export default function ProjectDetail() {
                 </div>
               </div>
             </section>
+
+            {/* ── Challenges Faced & Future Roadmap ── */}
+            {((project.challengesFaced && project.challengesFaced.length > 0) || 
+              (project.futureRoadmap && project.futureRoadmap.length > 0)) && (
+              <section className="py-24 px-6 bg-transparent border-b border-white/5">
+                <div className="max-w-7xl mx-auto">
+                  <div className="grid md:grid-cols-2 gap-12 md:gap-16">
+                    {/* Challenges Faced */}
+                    {project.challengesFaced && project.challengesFaced.length > 0 && (
+                      <ScrollReveal direction="right" delay={0}>
+                        <div className="bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-10 h-full group hover:border-red-500/20 transition-all duration-500">
+                          <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 group-hover:bg-red-500/20 transition-colors">
+                              <FaExclamationTriangle size={18} />
+                            </div>
+                            <div>
+                              <p className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30">Behind the Scenes</p>
+                              <h3 className="text-white font-bold text-lg">Key Challenges Faced</h3>
+                            </div>
+                          </div>
+                          <ul className="space-y-4 border-l-2 border-red-500/20 pl-6">
+                            {project.challengesFaced.map((item, index) => (
+                              <li key={index} className="text-gray-300 text-sm leading-relaxed flex items-start gap-2.5">
+                                <span className="text-red-400 font-bold select-none mt-0.5">•</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </ScrollReveal>
+                    )}
+
+                    {/* Future Roadmap & Improvements */}
+                    {project.futureRoadmap && project.futureRoadmap.length > 0 && (
+                      <ScrollReveal direction="left" delay={150}>
+                        <div className="bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-10 h-full group hover:border-brand/20 transition-all duration-500">
+                          <div className="flex items-center gap-4 mb-8">
+                            <div className="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand group-hover:bg-brand/20 transition-colors">
+                              <FaLightbulb size={18} />
+                            </div>
+                            <div>
+                              <p className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30">What's Next</p>
+                              <h3 className="text-white font-bold text-lg">Roadmap &amp; Improvements</h3>
+                            </div>
+                          </div>
+                          <ul className="space-y-4 border-l-2 border-brand/20 pl-6">
+                            {project.futureRoadmap.map((item, index) => (
+                              <li key={index} className="text-gray-300 text-sm leading-relaxed flex items-start gap-2.5">
+                                <span className="text-brand font-bold select-none mt-0.5">✓</span>
+                                <span>{item}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                      </ScrollReveal>
+                    )}
+                  </div>
+                </div>
+              </section>
+            )}
 
             {/* ── Tech Stack ── */}
             <section className="py-24 px-6">

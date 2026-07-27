@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import Profile from "@/components/Profile";
 import Partners from "@/components/Partners";
-import Experience from "@/components/Experience";
+import Skills from "@/components/Skills";
 import Projects from "@/components/Projects";
 import Stats from "@/components/Stats";
 import Process from "@/components/Process";
@@ -35,7 +35,7 @@ export default function Home() {
             <Profile />
             <Stats />
             <Partners />
-            <Experience />
+            <Skills />
             <Projects />
             <Process />
             <Testimonials />
