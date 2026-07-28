@@ -1,40 +1,56 @@
 "use client";
 
-import { useParams, useRouter } from "next/navigation";
+import { useParams } from "next/navigation";
 import { projects } from "@/data/projects";
-import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import FluidBackground from "@/components/FluidBackground";
-import Preloader from "@/components/Preloader";
-import PageWrapper from "@/components/PageWrapper";
-import ScrollReveal from "@/components/ScrollReveal";
+import { motion } from "framer-motion";
 import {
   FaArrowLeft,
   FaExternalLinkAlt,
   FaGithub,
-  FaLightbulb,
-  FaExclamationTriangle,
+  FaCheckCircle,
+  FaExclamationCircle
 } from "react-icons/fa";
-import { FiArrowRight } from "react-icons/fi";
+
+// Animation Variants
+const pageVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: {
+      duration: 0.6,
+      ease: "easeOut",
+      when: "beforeChildren",
+      staggerChildren: 0.1
+    }
+  }
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 15 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.5, ease: "easeOut" }
+  }
+};
 
 export default function ProjectDetail() {
   const { slug } = useParams();
-  const projectIndex = projects.findIndex((p) => p.slug === slug);
-  const project = projects[projectIndex];
-  const nextProject = projects[(projectIndex + 1) % projects.length];
-  const [isLoading, setIsLoading] = useState(true);
+  const project = projects.find((p) => p.slug === slug);
 
   if (!project) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-transparent text-white">
+      <div className="min-h-screen flex items-center justify-center bg-[#0a0714] text-white">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4 italic font-serif text-brand">
+          <h1 className="text-4xl font-bold mb-4 italic text-purple-500">
             Project Not Found
           </h1>
-          <Link href="/projects" className="text-white/50 hover:text-brand transition-colors text-sm uppercase tracking-widest">
+          <Link href="/projects" className="text-white/50 hover:text-purple-400 transition-colors text-sm uppercase tracking-widest">
             ← Back to Projects
           </Link>
         </div>
@@ -43,303 +59,176 @@ export default function ProjectDetail() {
   }
 
   return (
-    <>
-      <FluidBackground />
+    <div className="bg-[#0a0714] text-gray-200 min-h-screen flex flex-col font-sans">
+      <Header />
 
-      {isLoading && (
-        <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
-      )}
+      <motion.main
+        variants={pageVariants}
+        initial="hidden"
+        animate="visible"
+        className="flex-grow pt-24 pb-16 px-4 md:px-8 max-w-6xl mx-auto w-full"
+      >
+        {/* Back Link */}
+        <Link
+          href="/projects"
+          className="inline-flex items-center gap-2 text-gray-400 hover:text-purple-400 transition-colors text-sm font-semibold mb-6"
+        >
+          <FaArrowLeft size={12} />
+          Back to Projects
+        </Link>
 
-      {!isLoading && (
-        <PageWrapper>
-          <Header />
+        {/* Compact Header & Meta Section */}
+        <header className="mb-6">
+          <motion.div variants={itemVariants}>
+            <h1 className="text-3xl md:text-5xl font-extrabold text-white mb-2 leading-tight">
+              {project.title}
+            </h1>
+            <p className="text-sm md:text-base text-gray-400 mb-4 max-w-3xl">
+              {project.fullDescription}
+            </p>
+          </motion.div>
 
-          <main className="pt-20 dot-grid overflow-x-hidden">
-            {/* ── Hero ── */}
-            <section className="pt-32 md:pt-40 pb-0 px-6">
-              <div className="max-w-7xl mx-auto">
-                {/* Back link */}
-                <ScrollReveal delay={0}>
-                  <Link
-                    href="/projects"
-                    className="inline-flex items-center gap-3 text-white/30 hover:text-brand transition-all duration-300 mb-16 uppercase text-[10px] font-bold tracking-[0.5em] group"
-                  >
-                    <span className="w-8 h-[1px] bg-white/20 group-hover:w-14 group-hover:bg-brand transition-all duration-300" />
-                    Return to Archive
-                  </Link>
-                </ScrollReveal>
+          <motion.div variants={itemVariants} className="flex flex-col md:flex-row md:items-center justify-between gap-4 border-t border-purple-900/30 pt-4 mt-2">
+            {/* Tech Stack Tags */}
+            <div className="flex flex-wrap gap-2">
+              {project.tools.map((tool, i) => (
+                <span
+                  key={i}
+                  className="px-3 py-1 bg-purple-950/40 border border-purple-800/40 rounded-md text-xs font-mono text-purple-300"
+                >
+                  {tool}
+                </span>
+              ))}
+            </div>
 
-                {/* Hero layout */}
-                <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-end pb-16">
-                  {/* Left: title block */}
-                  <ScrollReveal direction="right" delay={100}>
-                    <div>
-                      <div className="flex items-center gap-4 mb-6">
-                        <span className="text-brand text-[10px] font-black uppercase tracking-[0.5em]">
-                          {project.category}
-                        </span>
-                        <span className="text-white/20 text-[10px]">
-                          {"//"} 0{project.id}
-                        </span>
-                      </div>
-                      <h1 className="text-4xl md:text-6xl lg:text-7xl font-black uppercase tracking-tighter leading-[0.88] mb-8">
-                        {project.title}
-                      </h1>
-                      <p className="text-gray-400 text-lg leading-relaxed max-w-md">
-                        {project.fullDescription}
-                      </p>
-                    </div>
-                  </ScrollReveal>
+            {/* Action Buttons */}
+            <div className="flex flex-wrap gap-3">
+              {project.liveLink && (
+                <motion.a
+                  href={project.liveLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className="flex items-center gap-2 bg-purple-600 hover:bg-purple-700 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                >
+                  <FaExternalLinkAlt size={12} />
+                  Live Demo
+                </motion.a>
+              )}
+              {project.githubLink && (
+                <motion.a
+                  href={project.githubLink}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  whileHover={{ scale: 1.05 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 10 }}
+                  className="flex items-center gap-2 border border-purple-900/50 hover:bg-purple-900/20 text-white text-xs md:text-sm font-semibold px-4 py-2 rounded-lg transition-colors"
+                >
+                  <FaGithub size={14} />
+                  GitHub Repo
+                </motion.a>
+              )}
+            </div>
+          </motion.div>
+        </header>
 
-                  {/* Right: meta + CTAs */}
-                  <ScrollReveal direction="left" delay={200}>
-                    <div className="flex flex-col gap-8 lg:items-end">
-                      <div className="flex flex-wrap gap-2">
-                        {project.tags.map((tag, i) => (
-                          <span
-                            key={i}
-                            className="text-[10px] font-bold px-4 py-2 border border-white/15 rounded-full text-white/60 uppercase tracking-widest"
-                          >
-                            {tag}
-                          </span>
-                        ))}
-                      </div>
+        {/* Main Showcase Image */}
+        <motion.div variants={itemVariants} className="relative w-full h-[300px] md:h-[450px] overflow-hidden rounded-xl border border-purple-900/40 mb-8 bg-[#120e24]">
+          <Image
+            src={project.img}
+            alt={project.title}
+            fill
+            className="object-cover"
+            priority
+          />
+        </motion.div>
 
-                      <div className="flex gap-4">
-                        {project.liveLink && (
-                          <Link
-                            href={project.liveLink}
-                            target="_blank"
-                            data-cursor="hover"
-                            className="flex items-center gap-3 bg-brand text-dark px-7 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:shadow-[0_0_25px_rgba(139, 92, 246,0.5)] hover:scale-105 transition-all duration-300"
-                          >
-                            <FaExternalLinkAlt size={10} />
-                            Live Demo
-                          </Link>
-                        )}
-                        {project.githubLink && (
-                          <Link
-                            href={project.githubLink}
-                            target="_blank"
-                            data-cursor="hover"
-                            className="flex items-center gap-3 border border-white/20 text-white px-7 py-3 rounded-full font-black text-xs uppercase tracking-widest hover:border-brand hover:text-brand transition-all duration-300"
-                          >
-                            <FaGithub size={12} />
-                            GitHub Client Repo
-                          </Link>
-                        )}
-                      </div>
-                    </div>
-                  </ScrollReveal>
-                </div>
-              </div>
-            </section>
+        {/* Structured Content Grid (2x2 Compact Cards) */}
+        <motion.div variants={itemVariants} className="grid grid-cols-1 md:grid-cols-2 gap-5">
+          {/* Card 1: Problem / Critical Challenge */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            whileHover={{ y: -5, borderColor: "rgba(168, 85, 247, 0.5)", boxShadow: "0 10px 30px -10px rgba(168, 85, 247, 0.2)" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="bg-[#120e24] border border-purple-900/30 p-5 rounded-xl flex flex-col"
+          >
+            <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2">
+              <FaExclamationCircle className="text-red-400" />
+              Critical Challenge
+            </h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              {project.challenge || "Overcoming specific obstacles in implementation."}
+            </p>
+          </motion.div>
 
-            {/* ── Hero Image ── */}
-            <ScrollReveal delay={100}>
-              <section className="px-4 md:px-6 mb-0">
-                <div className="max-w-7xl mx-auto">
-                  <div className="relative w-full aspect-[16/9] md:aspect-[21/9] rounded-[1.5rem] md:rounded-[2.5rem] overflow-hidden border border-white/8 shadow-[0_40px_80px_rgba(0,0,0,0.6)]">
-                    <Image
-                      src={project.img}
-                      alt={project.title}
-                      fill
-                      className="object-cover"
-                      priority
-                      sizes="100vw"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#050505]/60 via-transparent to-transparent" />
+          {/* Card 2: Technical Solution */}
+          <motion.div 
+            initial={{ opacity: 0, scale: 0.95 }}
+            whileInView={{ opacity: 1, scale: 1 }}
+            viewport={{ once: true, margin: "-50px" }}
+            whileHover={{ y: -5, borderColor: "rgba(168, 85, 247, 0.5)", boxShadow: "0 10px 30px -10px rgba(168, 85, 247, 0.2)" }}
+            transition={{ type: "spring", stiffness: 300, damping: 20 }}
+            className="bg-[#120e24] border border-purple-900/30 p-5 rounded-xl flex flex-col"
+          >
+            <h3 className="text-white font-bold text-lg mb-3 flex items-center gap-2">
+              <span className="text-purple-400 text-xl font-black leading-none">{'//'}</span>
+              Technical Solution
+            </h3>
+            <p className="text-sm text-gray-300 leading-relaxed">
+              {project.solution || "Strategic architecture and coding choices."}
+            </p>
+          </motion.div>
 
-                    {/* Floating meta chip */}
-                    <div className="absolute bottom-6 left-6 md:bottom-8 md:left-8 flex gap-3">
-                      {project.tools.slice(0, 3).map((tool, i) => (
-                        <span
-                          key={i}
-                          className="text-[10px] font-bold px-3 py-1.5 bg-black/60 backdrop-blur-md border border-white/20 rounded-full text-white/80 uppercase tracking-widest"
-                        >
-                          {tool}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              </section>
-            </ScrollReveal>
+          {/* Card 3: Key Challenges Faced */}
+          {project.challengesFaced && project.challengesFaced.length > 0 && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              whileHover={{ y: -5, borderColor: "rgba(168, 85, 247, 0.5)", boxShadow: "0 10px 30px -10px rgba(168, 85, 247, 0.2)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-[#120e24] border border-purple-900/30 p-5 rounded-xl flex flex-col"
+            >
+              <h3 className="text-white font-bold text-lg mb-3">Key Challenges Faced</h3>
+              <ul className="space-y-2">
+                {project.challengesFaced.map((item, index) => (
+                  <li key={index} className="text-sm text-gray-300 flex items-start gap-2">
+                    <FaExclamationCircle className="text-red-400 mt-1 flex-shrink-0" size={12} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
 
-            {/* ── Challenge & Solution ── */}
-            <section className="py-24 md:py-32 px-6 bg-transparent border-y border-white/5 mt-20">
-              <div className="max-w-7xl mx-auto">
-                <div className="grid md:grid-cols-2 gap-8 md:gap-16">
-                  {/* Challenge */}
-                  <ScrollReveal direction="right" delay={0}>
-                    <div className="bg-black/30 backdrop-blur-xl border border-white/8 rounded-3xl p-8 md:p-10 h-full group hover:border-red-500/30 transition-all duration-500">
-                      <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 group-hover:bg-red-500/20 transition-colors">
-                          <FaExclamationTriangle size={18} />
-                        </div>
-                        <div>
-                          <p className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30">The Problem</p>
-                          <h3 className="text-white font-bold text-lg">Critical Challenge</h3>
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-lg leading-relaxed pl-0 border-l-2 border-red-500/30 pl-6">
-                        {project.challenge}
-                      </p>
-                    </div>
-                  </ScrollReveal>
+          {/* Card 4: Future Roadmap & Improvements */}
+          {project.futureRoadmap && project.futureRoadmap.length > 0 && (
+            <motion.div 
+              initial={{ opacity: 0, scale: 0.95 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true, margin: "-50px" }}
+              whileHover={{ y: -5, borderColor: "rgba(168, 85, 247, 0.5)", boxShadow: "0 10px 30px -10px rgba(168, 85, 247, 0.2)" }}
+              transition={{ type: "spring", stiffness: 300, damping: 20 }}
+              className="bg-[#120e24] border border-purple-900/30 p-5 rounded-xl flex flex-col"
+            >
+              <h3 className="text-white font-bold text-lg mb-3">Future Roadmap</h3>
+              <ul className="space-y-2">
+                {project.futureRoadmap.map((item, index) => (
+                  <li key={index} className="text-sm text-gray-300 flex items-start gap-2">
+                    <FaCheckCircle className="text-purple-400 mt-1 flex-shrink-0" size={12} />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </motion.div>
+          )}
+        </motion.div>
+      </motion.main>
 
-                  {/* Solution */}
-                  <ScrollReveal direction="left" delay={150}>
-                    <div className="bg-black/30 backdrop-blur-xl border border-white/8 rounded-3xl p-8 md:p-10 h-full group hover:border-brand/30 transition-all duration-500">
-                      <div className="flex items-center gap-4 mb-8">
-                        <div className="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand group-hover:bg-brand/20 transition-colors">
-                          <FaLightbulb size={18} />
-                        </div>
-                        <div>
-                          <p className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30">The Answer</p>
-                          <h3 className="text-white font-bold text-lg">Technical Solution</h3>
-                        </div>
-                      </div>
-                      <p className="text-gray-300 text-lg leading-relaxed border-l-2 border-brand/30 pl-6">
-                        {project.solution}
-                      </p>
-                    </div>
-                  </ScrollReveal>
-                </div>
-              </div>
-            </section>
-
-            {/* ── Challenges Faced & Future Roadmap ── */}
-            {((project.challengesFaced && project.challengesFaced.length > 0) || 
-              (project.futureRoadmap && project.futureRoadmap.length > 0)) && (
-              <section className="py-24 px-6 bg-transparent border-b border-white/5">
-                <div className="max-w-7xl mx-auto">
-                  <div className="grid md:grid-cols-2 gap-12 md:gap-16">
-                    {/* Challenges Faced */}
-                    {project.challengesFaced && project.challengesFaced.length > 0 && (
-                      <ScrollReveal direction="right" delay={0}>
-                        <div className="bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-10 h-full group hover:border-red-500/20 transition-all duration-500">
-                          <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 rounded-2xl bg-red-500/10 border border-red-500/20 flex items-center justify-center text-red-400 group-hover:bg-red-500/20 transition-colors">
-                              <FaExclamationTriangle size={18} />
-                            </div>
-                            <div>
-                              <p className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30">Behind the Scenes</p>
-                              <h3 className="text-white font-bold text-lg">Key Challenges Faced</h3>
-                            </div>
-                          </div>
-                          <ul className="space-y-4 border-l-2 border-red-500/20 pl-6">
-                            {project.challengesFaced.map((item, index) => (
-                              <li key={index} className="text-gray-300 text-sm leading-relaxed flex items-start gap-2.5">
-                                <span className="text-red-400 font-bold select-none mt-0.5">•</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </ScrollReveal>
-                    )}
-
-                    {/* Future Roadmap & Improvements */}
-                    {project.futureRoadmap && project.futureRoadmap.length > 0 && (
-                      <ScrollReveal direction="left" delay={150}>
-                        <div className="bg-black/20 backdrop-blur-xl border border-white/5 rounded-3xl p-8 md:p-10 h-full group hover:border-brand/20 transition-all duration-500">
-                          <div className="flex items-center gap-4 mb-8">
-                            <div className="w-12 h-12 rounded-2xl bg-brand/10 border border-brand/20 flex items-center justify-center text-brand group-hover:bg-brand/20 transition-colors">
-                              <FaLightbulb size={18} />
-                            </div>
-                            <div>
-                              <p className="text-[10px] uppercase tracking-[0.4em] font-black text-white/30">What's Next</p>
-                              <h3 className="text-white font-bold text-lg">Roadmap &amp; Improvements</h3>
-                            </div>
-                          </div>
-                          <ul className="space-y-4 border-l-2 border-brand/20 pl-6">
-                            {project.futureRoadmap.map((item, index) => (
-                              <li key={index} className="text-gray-300 text-sm leading-relaxed flex items-start gap-2.5">
-                                <span className="text-brand font-bold select-none mt-0.5">✓</span>
-                                <span>{item}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
-                      </ScrollReveal>
-                    )}
-                  </div>
-                </div>
-              </section>
-            )}
-
-            {/* ── Tech Stack ── */}
-            <section className="py-24 px-6">
-              <div className="max-w-7xl mx-auto">
-                <ScrollReveal delay={0}>
-                  <div className="text-center mb-16">
-                    <p className="text-brand text-[10px] uppercase tracking-[0.5em] font-black mb-4">
-                      Built With
-                    </p>
-                    <h2 className="text-4xl md:text-6xl font-bold uppercase tracking-tighter">
-                      Tech <span className="italic font-serif text-brand">Stack</span>
-                    </h2>
-                  </div>
-                </ScrollReveal>
-
-                <ScrollReveal delay={100}>
-                  <div className="flex flex-wrap justify-center gap-3 md:gap-4">
-                    {project.tools.map((tool, i) => (
-                      <div
-                        key={i}
-                        className="px-6 md:px-10 py-4 md:py-6 bg-white/[0.03] border border-white/10 rounded-2xl md:rounded-3xl hover:bg-brand/5 hover:border-brand/40 hover:shadow-[0_0_20px_rgba(139, 92, 246,0.08)] transition-all duration-300 cursor-default group"
-                      >
-                        <span className="text-base md:text-lg font-bold tracking-widest uppercase text-white/50 group-hover:text-brand transition-colors duration-300">
-                          {tool}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </ScrollReveal>
-              </div>
-            </section>
-
-            {/* ── Next Project ── */}
-            <section className="border-t border-white/5 overflow-hidden">
-              <Link
-                href={`/projects/${nextProject.slug}`}
-                className="group block relative"
-                data-cursor="hover"
-              >
-                {/* Background image peek */}
-                <div className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-700">
-                  <Image
-                    src={nextProject.img}
-                    alt={nextProject.title}
-                    fill
-                    className="object-cover"
-                    sizes="100vw"
-                  />
-                  <div className="absolute inset-0 bg-[#0A0A0A]/85" />
-                </div>
-
-                <div className="relative z-10 py-20 px-6 flex flex-col md:flex-row items-center justify-between max-w-7xl mx-auto gap-8">
-                  <div>
-                    <p className="text-[10px] uppercase tracking-[0.5em] text-white/30 font-black mb-3">
-                      Next Project
-                    </p>
-                    <h3 className="text-3xl md:text-5xl font-black uppercase tracking-tighter text-white group-hover:text-brand transition-colors duration-500">
-                      {nextProject.title}
-                    </h3>
-                    <p className="text-gray-500 text-sm mt-2">{nextProject.category}</p>
-                  </div>
-                  <div className="w-16 h-16 rounded-full border-2 border-white/20 flex items-center justify-center group-hover:border-brand group-hover:bg-brand group-hover:shadow-[0_0_30px_rgba(139, 92, 246,0.4)] transition-all duration-500 flex-shrink-0">
-                    <FiArrowRight size={24} className="text-white group-hover:text-dark transition-colors duration-300" />
-                  </div>
-                </div>
-              </Link>
-            </section>
-          </main>
-
-          <Footer />
-        </PageWrapper>
-      )}
-    </>
+      <Footer />
+    </div>
   );
 }

@@ -1,8 +1,17 @@
 "use client";
 
-// All GSAP/framer-motion animations removed — static render
 import { useState } from "react";
-import ScrollReveal from "./ScrollReveal";
+import { motion } from "framer-motion";
+import {
+  FaEnvelope,
+  FaPhoneAlt,
+  FaMapMarkerAlt,
+  FaGithub,
+  FaLinkedinIn,
+  FaTwitter,
+  FaFacebookF,
+  FaPaperPlane,
+} from "react-icons/fa";
 
 export default function Contact() {
   const [result, setResult] = useState("");
@@ -11,7 +20,7 @@ export default function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setResult("Sending....");
+    setResult("Sending...");
 
     const formData = new FormData(e.target);
     formData.append("access_key", "d723d673-4114-4859-a14d-36cf3d54ed77");
@@ -19,7 +28,7 @@ export default function Contact() {
     try {
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        body: formData
+        body: formData,
       });
       const data = await response.json();
       if (data.success) {
@@ -36,65 +45,207 @@ export default function Contact() {
     }
   };
 
+  const contactInfo = [
+    {
+      icon: <FaEnvelope className="text-purple-400" size={18} />,
+      title: "Email",
+      value: "hello@example.com",
+      link: "sayedhasandipto.com",
+    },
+    {
+      icon: <FaPhoneAlt className="text-purple-400" size={18} />,
+      title: "WhatsApp / Phone",
+      value: "+8801940863413",
+      link: "tel:+8801940863413",
+    },
+    {
+      icon: <FaMapMarkerAlt className="text-purple-400" size={18} />,
+      title: "Location",
+      value: "Dhaka, Bangladesh",
+      link: "#",
+    },
+  ];
+
+  const socialLinks = [
+    {
+      icon: <FaGithub size={18} />,
+      link: "https://github.com/SayedHasanDIpto",
+    },
+    {
+      icon: <FaLinkedinIn size={18} />,
+      link: "https://www.linkedin.com/in/sayedhasandipto/",
+    },
+    {
+      icon: <FaTwitter size={18} />,
+      link: "https://x.com/devsayedhasan",
+    },
+    {
+      icon: <FaFacebookF size={18} />,
+      link: "https://www.facebook.com/SayedHasanDipto25",
+    },
+  ];
+
   return (
-    <section className="p-4 md:p-12 relative overflow-hidden bg-transparent" id="contact">
+    <section
+      className="bg-[#0a0714] text-gray-200 py-24 px-4 md:px-8 font-sans overflow-hidden"
+      id="contact"
+    >
+      <div className="max-w-6xl mx-auto w-full">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+          {/* Left Column */}
+          <motion.div
+            initial={{ opacity: 0, x: -30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex flex-col"
+          >
+            <div className="mb-10">
+              <span className="inline-block px-3 py-1 bg-purple-950/40 border border-purple-800/40 rounded-full text-xs font-bold tracking-widest text-purple-400 uppercase mb-4">
+                Get In Touch
+              </span>
+              <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+                Let&aposs build something <br className="hidden md:block" />{" "}
+                amazing together.
+              </h2>
+              <p className="text-gray-400 text-sm md:text-base max-w-md leading-relaxed">
+                Whether you have a project in mind, a job opportunity, or just
+                want to say hi, my inbox is always open. I&aposll try my best to
+                get back to you!
+              </p>
+            </div>
 
-      <ScrollReveal delay={0} className="max-w-7xl mx-auto bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl md:rounded-[3rem] p-6 md:p-20 text-white flex flex-col md:flex-row items-center gap-12 md:gap-16 relative z-10 shadow-2xl hover:border-brand/50 transition-all duration-500">
-        <div className="md:w-3/5 text-center md:text-left">
-          <h2 className="text-3xl md:text-6xl font-bold leading-tight uppercase text-white drop-shadow-lg">
-            Let&apos;s work together and create something extraordinary!
-          </h2>
-        </div>
-
-        <div className="md:w-2/5 w-full">
-          <div className="bg-white/5 border border-white/10 p-6 md:p-10 rounded-[2rem] md:rounded-[2.5rem] relative overflow-hidden group backdrop-blur-sm">
-            <div className="absolute inset-0 bg-brand/5 opacity-0 group-hover:opacity-100 transition-opacity duration-700 pointer-events-none"></div>
-
-            <p className="text-lg font-medium mb-6 relative z-10 text-white">Send me a message</p>
-            <form className="space-y-4 relative z-10" onSubmit={handleSubmit}>
-              <input
-                name="name"
-                required
-                className="w-full bg-white/10 border-white/20 rounded-xl py-3 px-4 focus:ring-brand focus:border-brand text-sm placeholder-gray-500 transition-all hover:bg-white/20 text-white"
-                placeholder="Full Name"
-                type="text"
-              />
-              <input
-                name="email"
-                required
-                className="w-full bg-white/10 border-white/20 rounded-xl py-3 px-4 focus:ring-brand focus:border-brand text-sm placeholder-gray-500 transition-all hover:bg-white/20 text-white"
-                placeholder="Email Address"
-                type="email"
-              />
-              <textarea
-                name="message"
-                required
-                className="w-full bg-white/10 border-white/20 rounded-xl py-3 px-4 focus:ring-brand focus:border-brand text-sm placeholder-gray-500 transition-all hover:bg-white/20 resize-none text-white"
-                placeholder="Tell me about your project"
-                rows="4"
-              ></textarea>
-
-              <div className="pt-2">
-                <button
-                  disabled={isSubmitting}
-                  className="w-full bg-brand text-dark font-bold py-4 rounded-xl hover:bg-[#cbf000] transition-colors relative overflow-hidden group/btn shadow-[0_0_15px_rgba(139, 92, 246,0.3)] hover:shadow-[0_0_25px_rgba(139, 92, 246,0.6)] disabled:opacity-50 disabled:cursor-not-allowed"
-                  type="submit"
-                  data-cursor="hover"
+            <div className="flex flex-col gap-4 mb-10">
+              {contactInfo.map((info, idx) => (
+                <a
+                  key={idx}
+                  href={info.link}
+                  className="flex items-center gap-4 p-4 rounded-xl bg-transparent border border-purple-900/30 hover:border-purple-500/50 hover:bg-purple-900/10 transition-colors duration-200 group"
                 >
-                  <span className="relative z-10">{isSubmitting ? "Sending..." : "Get Started"}</span>
-                  <div className="absolute inset-0 bg-white/30 translate-y-[100%] group-hover/btn:translate-y-[0%] transition-transform duration-300 ease-out z-0"></div>
-                </button>
-              </div>
+                  <div className="w-12 h-12 rounded-lg bg-[#120e24] border border-purple-900/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                    {info.icon}
+                  </div>
+                  <div>
+                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1">
+                      {info.title}
+                    </p>
+                    <p className="text-gray-200 font-medium text-sm md:text-base">
+                      {info.value}
+                    </p>
+                  </div>
+                </a>
+              ))}
+            </div>
 
-              {result && (
-                <p className={`text-center text-xs mt-4 ${result.includes("Successfully") ? "text-brand" : "text-red-500"}`}>
-                  {result}
-                </p>
-              )}
-            </form>
-          </div>
+            <div>
+              <p className="text-[10px] font-semibold text-gray-500 mb-4 uppercase tracking-widest">
+                Connect with me
+              </p>
+              <div className="flex gap-4">
+                {socialLinks.map((social, idx) => (
+                  <a
+                    key={idx}
+                    href={social.link}
+                    className="w-11 h-11 rounded-full bg-[#120e24] border border-purple-900/40 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-600 transition-all duration-200 hover:scale-105"
+                  >
+                    {social.icon}
+                  </a>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+
+          {/* Right Column */}
+          <motion.div
+            initial={{ opacity: 0, x: 30 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true, margin: "-50px" }}
+            transition={{ duration: 0.6, ease: "easeOut" }}
+            className="flex flex-col justify-center"
+          >
+            <div className="bg-transparent border border-purple-900/30 p-6 md:p-8 rounded-2xl relative overflow-hidden">
+              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-transparent pointer-events-none" />
+              <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                      Full Name
+                    </label>
+                    <input
+                      name="name"
+                      required
+                      type="text"
+                      placeholder="John Doe"
+                      className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                    />
+                  </div>
+                  <div className="flex flex-col gap-1.5">
+                    <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                      Email Address
+                    </label>
+                    <input
+                      name="email"
+                      required
+                      type="email"
+                      placeholder="john@example.com"
+                      className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                    />
+                  </div>
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                    Subject
+                  </label>
+                  <input
+                    name="subject"
+                    required
+                    type="text"
+                    placeholder="Project Inquiry"
+                    className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                  />
+                </div>
+
+                <div className="flex flex-col gap-1.5">
+                  <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                    Message
+                  </label>
+                  <textarea
+                    name="message"
+                    required
+                    rows="5"
+                    placeholder="Tell me about your project..."
+                    className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 resize-none focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                  ></textarea>
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={isSubmitting}
+                  className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                >
+                  {isSubmitting ? (
+                    "Sending..."
+                  ) : (
+                    <>
+                      <span>Send Message</span>
+                      <FaPaperPlane size={12} />
+                    </>
+                  )}
+                </button>
+
+                {result && (
+                  <p
+                    className={`text-center text-xs mt-4 font-semibold tracking-wide ${result.includes("Successfully") ? "text-purple-400" : "text-red-400"}`}
+                  >
+                    {result}
+                  </p>
+                )}
+              </form>
+            </div>
+          </motion.div>
         </div>
-      </ScrollReveal>
+      </div>
     </section>
   );
 }

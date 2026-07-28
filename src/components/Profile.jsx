@@ -130,7 +130,7 @@ export default function Profile() {
               {/* Portrait card */}
               <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-white/10 hover:border-brand/40 hover:shadow-[0_0_50px_rgba(139,92,246,0.15)] transition-all duration-500">
                 <Image
-                  src="https://i.ibb.co/tPMj0tRG/potrate.png"
+                  src="https://i.ibb.co.com/DPK4bzzd/IMG-4934.jpg"
                   alt="Sayed Hasan Dipto"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
