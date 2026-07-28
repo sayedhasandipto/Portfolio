@@ -67,42 +67,42 @@ export default function Profile() {
   return (
     <section
       id="about"
-      className="py-28 px-6 bg-transparent relative overflow-hidden"
+      className="relative overflow-hidden bg-transparent px-6 py-28"
     >
       {/* ── Section wrapper ─────────────────────────────────────── */}
-      <div className="max-w-7xl mx-auto">
+      <div className="mx-auto max-w-7xl">
         {/* ── Section label + heading ─────────────────────────── */}
         <ScrollReveal delay={0}>
-          <div className="text-center mb-20">
-            <p className="text-brand text-[10px] uppercase tracking-[0.4em] font-black mb-4">
+          <div className="mb-20 text-center">
+            <p className="text-brand mb-4 text-[10px] font-black tracking-[0.4em] uppercase">
               Curriculum Vitae
             </p>
-            <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter leading-none">
+            <h2 className="text-5xl leading-none font-black tracking-tighter text-white uppercase md:text-7xl">
               About{" "}
-              <span className="italic font-serif text-brand font-bold">Me</span>
+              <span className="text-brand font-serif font-bold italic">Me</span>
             </h2>
-            <p className="mt-5 text-gray-400 text-base md:text-lg font-light max-w-xl mx-auto">
+            <p className="mx-auto mt-5 max-w-xl text-base font-light text-gray-400 md:text-lg">
               Driven by Passion, Fueled by Code &amp; Creativity.
             </p>
           </div>
         </ScrollReveal>
 
         {/* ── Two-column layout ────────────────────────────────── */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start mb-20">
+        <div className="mb-20 grid grid-cols-1 items-start gap-12 lg:grid-cols-2 xl:gap-20">
           {/* Left — Bio paragraphs ─────────────────────────────── */}
           <ScrollReveal direction="left" delay={100}>
             <div className="space-y-10">
               {bio.map((item) => (
                 <div key={item.label} className="group">
                   {/* Label */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <span className="w-1.5 h-1.5 rounded-full bg-brand animate-pulse" />
-                    <span className="text-brand font-black text-[10px] uppercase tracking-[0.35em]">
+                  <div className="mb-3 flex items-center gap-3">
+                    <span className="bg-brand h-1.5 w-1.5 animate-pulse rounded-full" />
+                    <span className="text-brand text-[10px] font-black tracking-[0.35em] uppercase">
                       {item.label}
                     </span>
                   </div>
                   {/* Text */}
-                  <p className="text-gray-300 leading-[1.85] text-sm md:text-[15px]">
+                  <p className="text-sm leading-[1.85] text-gray-300 md:text-[15px]">
                     {item.text}
                   </p>
                 </div>
@@ -110,14 +110,14 @@ export default function Profile() {
 
               {/* ── Tech-stack pills ──────────────────────────── */}
               <div>
-                <span className="text-[10px] font-black uppercase tracking-[0.35em] text-gray-500 block mb-4">
+                <span className="mb-4 block text-[10px] font-black tracking-[0.35em] text-gray-500 uppercase">
                   Core Stack
                 </span>
                 <div className="flex flex-wrap gap-2">
                   {stack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-4 py-2 text-[11px] font-bold uppercase tracking-widest bg-white/4 border border-white/10 rounded-full text-gray-300 hover:border-brand/60 hover:text-white hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300 cursor-default"
+                      className="hover:border-brand/60 cursor-default rounded-full border border-white/10 bg-white/4 px-4 py-2 text-[11px] font-bold tracking-widest text-gray-300 uppercase transition-all duration-300 hover:text-white hover:shadow-[0_0_12px_rgba(139,92,246,0.2)]"
                     >
                       {tech}
                     </span>
@@ -131,38 +131,38 @@ export default function Profile() {
           <ScrollReveal direction="right" delay={200}>
             <div className="flex flex-col gap-6">
               {/* Portrait card */}
-              <div className="relative w-full aspect-4/5 rounded-[2.5rem] overflow-hidden group border border-white/10 hover:border-brand/40 hover:shadow-[0_0_50px_rgba(139,92,246,0.15)] transition-all duration-500">
+              <div className="group hover:border-brand/40 relative aspect-4/5 w-full overflow-hidden rounded-[2.5rem] border border-white/10 transition-all duration-500 hover:shadow-[0_0_50px_rgba(139,92,246,0.15)]">
                 <Image
                   src="https://i.ibb.co.com/jpSSsfZ/IMG-4937.jpg"
                   alt="Sayed Hasan Dipto"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
-                  className="object-cover object-top grayscale group-hover:grayscale-0 scale-105 group-hover:scale-100 transition-all duration-700"
+                  className="scale-105 object-cover object-top grayscale transition-all duration-700 group-hover:scale-100 group-hover:grayscale-0"
                   priority
                 />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-linear-to-t from-dark via-dark/20 to-transparent opacity-80 pointer-events-none" />
+                <div className="from-dark via-dark/20 pointer-events-none absolute inset-0 bg-linear-to-t to-transparent opacity-80" />
 
                 {/* Name badge */}
-                <div className="absolute bottom-6 left-6 right-6 z-10">
-                  <p className="text-brand font-black text-2xl md:text-3xl uppercase leading-none tracking-tighter">
+                <div className="absolute right-6 bottom-6 left-6 z-10">
+                  <p className="text-brand text-2xl leading-none font-black tracking-tighter uppercase md:text-3xl">
                     Sayed Hasan
                     <br />
                     Dipto
                   </p>
-                  <p className="text-white/50 text-xs uppercase tracking-[0.25em] mt-2">
+                  <p className="mt-2 text-xs tracking-[0.25em] text-white/50 uppercase">
                     MERN Stack Developer &amp; UI/UX Designer
                   </p>
-                  <div className="h-[2px] w-10 bg-brand mt-3" />
+                  <div className="bg-brand mt-3 h-[2px] w-10" />
                 </div>
 
                 {/* Available badge */}
-                <div className="absolute top-5 right-5 flex items-center gap-2 bg-black/60 backdrop-blur-md border border-white/10 rounded-full px-3 py-1.5 z-10">
+                <div className="absolute top-5 right-5 z-10 flex items-center gap-2 rounded-full border border-white/10 bg-black/60 px-3 py-1.5 backdrop-blur-md">
                   <span className="relative flex h-2 w-2">
-                    <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                    <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-400" />
+                    <span className="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75" />
+                    <span className="relative inline-flex h-2 w-2 rounded-full bg-emerald-400" />
                   </span>
-                  <span className="text-[10px] font-bold text-white/80 uppercase tracking-widest">
+                  <span className="text-[10px] font-bold tracking-widest text-white/80 uppercase">
                     Available
                   </span>
                 </div>
@@ -177,12 +177,12 @@ export default function Profile() {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="bg-white/4 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center hover:border-brand/40 hover:bg-white/[0.07] transition-all duration-300 group"
+                    className="hover:border-brand/40 group flex flex-col items-center rounded-2xl border border-white/10 bg-white/4 p-4 text-center transition-all duration-300 hover:bg-white/[0.07]"
                   >
-                    <span className="text-2xl font-black text-white group-hover:text-brand transition-colors">
+                    <span className="group-hover:text-brand text-2xl font-black text-white transition-colors">
                       {stat.value}
                     </span>
-                    <span className="text-[9px] font-bold uppercase tracking-widest text-gray-500 mt-1">
+                    <span className="mt-1 text-[9px] font-bold tracking-widest text-gray-500 uppercase">
                       {stat.label}
                     </span>
                   </div>
@@ -193,29 +193,29 @@ export default function Profile() {
         </div>
 
         {/* ── Highlight cards grid ──────────────────────────────── */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-5">
+        <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
           {highlights.map((card, i) => (
             <ScrollReveal key={card.title} delay={i * 80} direction="up">
               <div
-                className={`relative h-full bg-linear-to-br ${card.accent} bg-black/30 backdrop-blur-xl border border-white/8 ${card.border} rounded-3xl p-7 flex flex-col gap-4 group transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.12)] hover:-translate-y-1 cursor-default`}
+                className={`relative h-full bg-linear-to-br ${card.accent} border border-white/8 bg-black/30 backdrop-blur-xl ${card.border} group flex cursor-default flex-col gap-4 rounded-3xl p-7 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_0_30px_rgba(139,92,246,0.12)]`}
               >
                 {/* Emoji icon */}
-                <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
+                <div className="flex h-12 w-12 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-2xl transition-transform duration-300 group-hover:scale-110">
                   {card.emoji}
                 </div>
 
                 {/* Content */}
                 <div>
-                  <h4 className="text-white font-bold text-base mb-2 group-hover:text-brand transition-colors duration-300">
+                  <h4 className="group-hover:text-brand mb-2 text-base font-bold text-white transition-colors duration-300">
                     {card.title}
                   </h4>
-                  <p className="text-gray-400 text-sm leading-relaxed">
+                  <p className="text-sm leading-relaxed text-gray-400">
                     {card.desc}
                   </p>
                 </div>
 
                 {/* Subtle corner accent line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-b-3xl bg-linear-to-r from-transparent via-brand/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="via-brand/30 absolute right-0 bottom-0 left-0 h-[2px] rounded-b-3xl bg-linear-to-r from-transparent to-transparent opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
               </div>
             </ScrollReveal>
           ))}

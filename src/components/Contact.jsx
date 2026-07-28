@@ -49,8 +49,8 @@ export default function Contact() {
     {
       icon: <FaEnvelope className="text-purple-400" size={18} />,
       title: "Email",
-      value: "hello@example.com",
-      link: "sayedhasandipto.com",
+      value: "sayedhasandipto@gmail.com",
+      link: "mailto:sayedhasandipto@gmail.com",
     },
     {
       icon: <FaPhoneAlt className="text-purple-400" size={18} />,
@@ -62,7 +62,7 @@ export default function Contact() {
       icon: <FaMapMarkerAlt className="text-purple-400" size={18} />,
       title: "Location",
       value: "Dhaka, Bangladesh",
-      link: "#",
+      link: "https://maps.google.com/?q=Dhaka,+Bangladesh",
     },
   ];
 
@@ -87,11 +87,11 @@ export default function Contact() {
 
   return (
     <section
-      className="bg-[#0a0714] text-gray-200 py-24 px-4 md:px-8 font-sans overflow-hidden"
+      className="overflow-hidden bg-[#0a0714] px-4 py-24 font-sans text-gray-200 md:px-8"
       id="contact"
     >
-      <div className="max-w-6xl mx-auto w-full">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-20">
+      <div className="mx-auto w-full max-w-6xl">
+        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
           {/* Left Column */}
           <motion.div
             initial={{ opacity: 0, x: -30 }}
@@ -101,35 +101,35 @@ export default function Contact() {
             className="flex flex-col"
           >
             <div className="mb-10">
-              <span className="inline-block px-3 py-1 bg-purple-950/40 border border-purple-800/40 rounded-full text-xs font-bold tracking-widest text-purple-400 uppercase mb-4">
+              <span className="mb-4 inline-block rounded-full border border-purple-800/40 bg-purple-950/40 px-3 py-1 text-xs font-bold tracking-widest text-purple-400 uppercase">
                 Get In Touch
               </span>
-              <h2 className="text-4xl md:text-5xl font-extrabold text-white leading-tight mb-4">
+              <h2 className="mb-4 text-4xl leading-tight font-extrabold text-white md:text-5xl">
                 Let&aposs build something <br className="hidden md:block" />{" "}
                 amazing together.
               </h2>
-              <p className="text-gray-400 text-sm md:text-base max-w-md leading-relaxed">
+              <p className="max-w-md text-sm leading-relaxed text-gray-400 md:text-base">
                 Whether you have a project in mind, a job opportunity, or just
                 want to say hi, my inbox is always open. I&aposll try my best to
                 get back to you!
               </p>
             </div>
 
-            <div className="flex flex-col gap-4 mb-10">
+            <div className="mb-10 flex flex-col gap-4">
               {contactInfo.map((info, idx) => (
                 <a
                   key={idx}
                   href={info.link}
-                  className="flex items-center gap-4 p-4 rounded-xl bg-transparent border border-purple-900/30 hover:border-purple-500/50 hover:bg-purple-900/10 transition-colors duration-200 group"
+                  className="group flex items-center gap-4 rounded-xl border border-purple-900/30 bg-transparent p-4 transition-colors duration-200 hover:border-purple-500/50 hover:bg-purple-900/10"
                 >
-                  <div className="w-12 h-12 rounded-lg bg-[#120e24] border border-purple-900/40 flex items-center justify-center group-hover:scale-105 transition-transform duration-200">
+                  <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-purple-900/40 bg-[#120e24] transition-transform duration-200 group-hover:scale-105">
                     {info.icon}
                   </div>
                   <div>
-                    <p className="text-[10px] text-gray-500 uppercase tracking-widest font-semibold mb-1">
+                    <p className="mb-1 text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
                       {info.title}
                     </p>
-                    <p className="text-gray-200 font-medium text-sm md:text-base">
+                    <p className="text-sm font-medium text-gray-200 md:text-base">
                       {info.value}
                     </p>
                   </div>
@@ -138,7 +138,7 @@ export default function Contact() {
             </div>
 
             <div>
-              <p className="text-[10px] font-semibold text-gray-500 mb-4 uppercase tracking-widest">
+              <p className="mb-4 text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
                 Connect with me
               </p>
               <div className="flex gap-4">
@@ -146,7 +146,7 @@ export default function Contact() {
                   <a
                     key={idx}
                     href={social.link}
-                    className="w-11 h-11 rounded-full bg-[#120e24] border border-purple-900/40 flex items-center justify-center text-gray-400 hover:text-white hover:border-purple-500 hover:bg-purple-600 transition-all duration-200 hover:scale-105"
+                    className="flex h-11 w-11 items-center justify-center rounded-full border border-purple-900/40 bg-[#120e24] text-gray-400 transition-all duration-200 hover:scale-105 hover:border-purple-500 hover:bg-purple-600 hover:text-white"
                   >
                     {social.icon}
                   </a>
@@ -163,38 +163,38 @@ export default function Contact() {
             transition={{ duration: 0.6, ease: "easeOut" }}
             className="flex flex-col justify-center"
           >
-            <div className="bg-transparent border border-purple-900/30 p-6 md:p-8 rounded-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-linear-to-br from-purple-900/10 to-transparent pointer-events-none" />
-              <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="relative overflow-hidden rounded-2xl border border-purple-900/30 bg-transparent p-6 md:p-8">
+              <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-purple-900/10 to-transparent" />
+              <form onSubmit={handleSubmit} className="relative z-10 space-y-4">
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                    <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
                       Full Name
                     </label>
                     <input
                       name="name"
                       required
                       type="text"
-                      placeholder="John Doe"
-                      className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                      placeholder="Sayed Hasan Dipto"
+                      className="w-full rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
                     />
                   </div>
                   <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                    <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
                       Email Address
                     </label>
                     <input
                       name="email"
                       required
                       type="email"
-                      placeholder="john@example.com"
-                      className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                      placeholder="sayedhasandipto@gmail.com"
+                      className="w-full rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
                     />
                   </div>
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                  <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
                     Subject
                   </label>
                   <input
@@ -202,12 +202,12 @@ export default function Contact() {
                     required
                     type="text"
                     placeholder="Project Inquiry"
-                    className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                    className="w-full rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
                   />
                 </div>
 
                 <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-semibold text-gray-500 uppercase tracking-widest">
+                  <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
                     Message
                   </label>
                   <textarea
@@ -215,14 +215,14 @@ export default function Contact() {
                     required
                     rows="5"
                     placeholder="Tell me about your project..."
-                    className="w-full bg-[#120e24] border border-purple-900/40 rounded-lg py-3.5 px-4 text-sm text-white placeholder-gray-600 resize-none focus:outline-none focus:border-purple-500 transition-colors duration-200"
+                    className="w-full resize-none rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
                   ></textarea>
                 </div>
 
                 <button
                   type="submit"
                   disabled={isSubmitting}
-                  className="w-full flex items-center justify-center gap-2 bg-purple-600 hover:bg-purple-700 text-white font-bold py-3.5 px-6 rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-purple-600 px-6 py-3.5 font-bold text-white transition-colors duration-200 hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
                 >
                   {isSubmitting ? (
                     "Sending..."
@@ -236,7 +236,7 @@ export default function Contact() {
 
                 {result && (
                   <p
-                    className={`text-center text-xs mt-4 font-semibold tracking-wide ${result.includes("Successfully") ? "text-purple-400" : "text-red-400"}`}
+                    className={`mt-4 text-center text-xs font-semibold tracking-wide ${result.includes("Successfully") ? "text-purple-400" : "text-red-400"}`}
                   >
                     {result}
                   </p>
