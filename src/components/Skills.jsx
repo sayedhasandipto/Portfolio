@@ -90,7 +90,7 @@ export default function Skills() {
               My Technical Armory
             </span>
           </div>
-          <h2 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-white via-gray-200 to-purple-300 tracking-tight mb-4">
+          <h2 className="text-4xl md:text-5xl font-extrabold text-transparent bg-clip-text bg-linear-to-r from-white via-gray-200 to-purple-300 tracking-tight mb-4">
             Skills & Capabilities
           </h2>
           <p className="text-gray-400 text-sm max-w-2xl leading-relaxed">
@@ -115,7 +115,7 @@ export default function Skills() {
                 <div className="bg-[#16122b] rounded-full h-3 p-[2px] border border-purple-900/30 w-full overflow-hidden flex items-center shadow-inner">
                   {/* Progress Fill */}
                   <div 
-                    className={`progress-fill h-full rounded-full bg-gradient-to-r ${skill.gradient} relative overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.2)]`}
+                    className={`progress-fill h-full rounded-full bg-linear-to-r ${skill.gradient} relative overflow-hidden shadow-[0_0_10px_rgba(255,255,255,0.2)]`}
                     data-width={skill.percent}
                   >
                     {/* Glossy shine overlay */}
@@ -150,7 +150,7 @@ export default function Skills() {
             </div>
 
             {/* Panel B: Currently Mastering */}
-            <div className="fade-up relative overflow-hidden bg-gradient-to-br from-[#16112e] to-[#0f0c21] border border-purple-800/40 rounded-2xl p-6 lg:p-8 shadow-xl flex-1">
+            <div className="fade-up relative overflow-hidden bg-linear-to-br from-[#16112e] to-[#0f0c21] border border-purple-800/40 rounded-2xl p-6 lg:p-8 shadow-xl flex-1">
               {/* Background ambient glow inside card */}
               <div className="absolute -top-20 -right-20 w-40 h-40 bg-emerald-500/10 rounded-full blur-[60px]" />
               
@@ -170,7 +170,7 @@ export default function Skills() {
               <ul className="space-y-4 relative z-10">
                 {masteringTopics.map((topic, idx) => (
                   <li key={idx} className="flex items-start gap-3">
-                    <div className="mt-1 flex-shrink-0">
+                    <div className="mt-1 shrink-0">
                       <FiActivity className="text-emerald-400/80 text-xs shadow-[0_0_10px_rgba(52,211,153,0.5)] rounded-full" />
                     </div>
                     <span className="text-sm font-medium text-gray-300 leading-snug">
@@ -187,7 +187,7 @@ export default function Skills() {
       </div>
       
       {/* Background Glow */}
-      <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[150px] pointer-events-none -z-0 translate-x-1/3 translate-y-1/3" />
+      <div className="absolute bottom-0 right-0 w-[800px] h-[800px] bg-purple-900/10 rounded-full blur-[150px] pointer-events-none z-0 translate-x-1/3 translate-y-1/3" />
     </section>
   );
 }

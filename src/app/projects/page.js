@@ -18,8 +18,8 @@ function IndividualProjectCard({ project }) {
         className="group project-card cursor-pointer relative transition-transform duration-500 ease-out hover:-translate-y-2 h-full flex flex-col"
         data-cursor="hover"
       >
-        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-4 shadow-sm hover:shadow-[0_0_40px_rgba(139, 92, 246,0.15)] transition-all duration-500 overflow-hidden mb-6 hover:border-brand/40 flex-shrink-0">
-          <div className="bg-white/5 rounded-2xl aspect-[4/3] overflow-hidden relative border border-white/5">
+        <div className="bg-black/30 backdrop-blur-xl border border-white/10 rounded-3xl p-4 shadow-sm hover:shadow-[0_0_40px_rgba(139, 92, 246,0.15)] transition-all duration-500 overflow-hidden mb-6 hover:border-brand/40 shrink-0">
+          <div className="bg-white/5 rounded-2xl aspect-4/3 overflow-hidden relative border border-white/5">
             <Image
               alt={project.title}
               fill
@@ -27,11 +27,11 @@ function IndividualProjectCard({ project }) {
               src={project.img}
               sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
             />
-            <div className="absolute inset-0 bg-[#0A0A0A]/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
+            <div className="absolute inset-0 bg-dark/20 group-hover:bg-transparent transition-colors duration-500 z-10 pointer-events-none" />
           </div>
         </div>
 
-        <div className="flex-grow flex flex-col justify-between">
+        <div className="grow flex flex-col justify-between">
           <div>
             <span className="text-[10px] font-black uppercase tracking-[0.3em] text-white/40 mb-2 block group-hover:text-brand transition-colors">
               {project.category}

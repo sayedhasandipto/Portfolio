@@ -1,7 +1,7 @@
 // FluidBackground — Optimized CSS ambient background
 export default function FluidBackground() {
   return (
-    <div className="fixed inset-0 pointer-events-none z-[-1] bg-[#0A0A0A] overflow-hidden">
+    <div className="fixed inset-0 pointer-events-none z-[-1] bg-dark overflow-hidden">
       {/* Subtle Premium Grid (Linear, not dots) fading out at edges */}
       <div 
         className="absolute inset-0 opacity-[0.15]"

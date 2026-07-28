@@ -53,8 +53,14 @@ const bio = [
 
 // ── Tech Stack pills ──────────────────────────────────────────────────────────
 const stack = [
-  "Next.js", "React.js", "Node.js", "MongoDB",
-  "Express", "Tailwind CSS", "Figma", "GSAP",
+  "Next.js",
+  "React.js",
+  "Node.js",
+  "MongoDB",
+  "Express",
+  "Tailwind CSS",
+  "Figma",
+  "GSAP",
 ];
 
 export default function Profile() {
@@ -65,7 +71,6 @@ export default function Profile() {
     >
       {/* ── Section wrapper ─────────────────────────────────────── */}
       <div className="max-w-7xl mx-auto">
-
         {/* ── Section label + heading ─────────────────────────── */}
         <ScrollReveal delay={0}>
           <div className="text-center mb-20">
@@ -84,7 +89,6 @@ export default function Profile() {
 
         {/* ── Two-column layout ────────────────────────────────── */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 xl:gap-20 items-start mb-20">
-
           {/* Left — Bio paragraphs ─────────────────────────────── */}
           <ScrollReveal direction="left" delay={100}>
             <div className="space-y-10">
@@ -113,7 +117,7 @@ export default function Profile() {
                   {stack.map((tech) => (
                     <span
                       key={tech}
-                      className="px-4 py-2 text-[11px] font-bold uppercase tracking-widest bg-white/[0.04] border border-white/10 rounded-full text-gray-300 hover:border-brand/60 hover:text-white hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300 cursor-default"
+                      className="px-4 py-2 text-[11px] font-bold uppercase tracking-widest bg-white/4 border border-white/10 rounded-full text-gray-300 hover:border-brand/60 hover:text-white hover:shadow-[0_0_12px_rgba(139,92,246,0.2)] transition-all duration-300 cursor-default"
                     >
                       {tech}
                     </span>
@@ -126,11 +130,10 @@ export default function Profile() {
           {/* Right — Portrait + quick stats ───────────────────── */}
           <ScrollReveal direction="right" delay={200}>
             <div className="flex flex-col gap-6">
-
               {/* Portrait card */}
-              <div className="relative w-full aspect-[4/5] rounded-[2.5rem] overflow-hidden group border border-white/10 hover:border-brand/40 hover:shadow-[0_0_50px_rgba(139,92,246,0.15)] transition-all duration-500">
+              <div className="relative w-full aspect-4/5 rounded-[2.5rem] overflow-hidden group border border-white/10 hover:border-brand/40 hover:shadow-[0_0_50px_rgba(139,92,246,0.15)] transition-all duration-500">
                 <Image
-                  src="https://i.ibb.co.com/DPK4bzzd/IMG-4934.jpg"
+                  src="https://i.ibb.co.com/jpSSsfZ/IMG-4937.jpg"
                   alt="Sayed Hasan Dipto"
                   fill
                   sizes="(max-width: 1024px) 100vw, 50vw"
@@ -138,12 +141,14 @@ export default function Profile() {
                   priority
                 />
                 {/* Gradient overlay */}
-                <div className="absolute inset-0 bg-gradient-to-t from-[#0A0A0A] via-[#0A0A0A]/20 to-transparent opacity-80 pointer-events-none" />
+                <div className="absolute inset-0 bg-linear-to-t from-dark via-dark/20 to-transparent opacity-80 pointer-events-none" />
 
                 {/* Name badge */}
                 <div className="absolute bottom-6 left-6 right-6 z-10">
                   <p className="text-brand font-black text-2xl md:text-3xl uppercase leading-none tracking-tighter">
-                    Sayed Hasan<br />Dipto
+                    Sayed Hasan
+                    <br />
+                    Dipto
                   </p>
                   <p className="text-white/50 text-xs uppercase tracking-[0.25em] mt-2">
                     MERN Stack Developer &amp; UI/UX Designer
@@ -172,7 +177,7 @@ export default function Profile() {
                 ].map((stat) => (
                   <div
                     key={stat.label}
-                    className="bg-white/[0.04] border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center hover:border-brand/40 hover:bg-white/[0.07] transition-all duration-300 group"
+                    className="bg-white/4 border border-white/10 rounded-2xl p-4 flex flex-col items-center text-center hover:border-brand/40 hover:bg-white/[0.07] transition-all duration-300 group"
                   >
                     <span className="text-2xl font-black text-white group-hover:text-brand transition-colors">
                       {stat.value}
@@ -183,7 +188,6 @@ export default function Profile() {
                   </div>
                 ))}
               </div>
-
             </div>
           </ScrollReveal>
         </div>
@@ -193,7 +197,7 @@ export default function Profile() {
           {highlights.map((card, i) => (
             <ScrollReveal key={card.title} delay={i * 80} direction="up">
               <div
-                className={`relative h-full bg-gradient-to-br ${card.accent} bg-black/30 backdrop-blur-xl border border-white/[0.08] ${card.border} rounded-3xl p-7 flex flex-col gap-4 group transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.12)] hover:-translate-y-1 cursor-default`}
+                className={`relative h-full bg-linear-to-br ${card.accent} bg-black/30 backdrop-blur-xl border border-white/8 ${card.border} rounded-3xl p-7 flex flex-col gap-4 group transition-all duration-500 hover:shadow-[0_0_30px_rgba(139,92,246,0.12)] hover:-translate-y-1 cursor-default`}
               >
                 {/* Emoji icon */}
                 <div className="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-2xl group-hover:scale-110 transition-transform duration-300">
@@ -211,12 +215,11 @@ export default function Profile() {
                 </div>
 
                 {/* Subtle corner accent line */}
-                <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-b-3xl bg-gradient-to-r from-transparent via-brand/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                <div className="absolute bottom-0 left-0 right-0 h-[2px] rounded-b-3xl bg-linear-to-r from-transparent via-brand/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
               </div>
             </ScrollReveal>
           ))}
         </div>
-
       </div>
     </section>
   );

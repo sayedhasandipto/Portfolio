@@ -37,7 +37,7 @@ export default function Partners() {
             <div
               key={index}
               data-cursor="hover"
-              className="mx-3 bg-black/30 backdrop-blur-xl px-10 py-6 rounded-2xl flex items-center justify-center border border-white/8 hover:border-brand/50 hover:bg-white/[0.08] hover:shadow-[0_0_20px_rgba(139, 92, 246,0.1)] transition-all duration-300 group/item min-w-fit flex-shrink-0"
+              className="mx-3 bg-black/30 backdrop-blur-xl px-10 py-6 rounded-2xl flex items-center justify-center border border-white/8 hover:border-brand/50 hover:bg-white/8 hover:shadow-[0_0_20px_rgba(139, 92, 246,0.1)] transition-all duration-300 group/item min-w-fit shrink-0"
               style={{ animationPlayState: "inherit" }}
             >
               <span className="font-bold text-xl opacity-25 group-hover/item:opacity-100 group-hover/item:text-brand transition-all duration-300 text-white whitespace-nowrap">

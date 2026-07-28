@@ -66,7 +66,7 @@ export default function ProjectDetail() {
         variants={pageVariants}
         initial="hidden"
         animate="visible"
-        className="flex-grow pt-24 pb-16 px-4 md:px-8 max-w-6xl mx-auto w-full"
+        className="grow pt-24 pb-16 px-4 md:px-8 max-w-6xl mx-auto w-full"
       >
         {/* Back Link */}
         <Link
@@ -196,7 +196,7 @@ export default function ProjectDetail() {
               <ul className="space-y-2">
                 {project.challengesFaced.map((item, index) => (
                   <li key={index} className="text-sm text-gray-300 flex items-start gap-2">
-                    <FaExclamationCircle className="text-red-400 mt-1 flex-shrink-0" size={12} />
+                    <FaExclamationCircle className="text-red-400 mt-1 shrink-0" size={12} />
                     <span>{item}</span>
                   </li>
                 ))}
@@ -218,7 +218,7 @@ export default function ProjectDetail() {
               <ul className="space-y-2">
                 {project.futureRoadmap.map((item, index) => (
                   <li key={index} className="text-sm text-gray-300 flex items-start gap-2">
-                    <FaCheckCircle className="text-purple-400 mt-1 flex-shrink-0" size={12} />
+                    <FaCheckCircle className="text-purple-400 mt-1 shrink-0" size={12} />
                     <span>{item}</span>
                   </li>
                 ))}

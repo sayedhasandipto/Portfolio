@@ -30,7 +30,7 @@ export default function About() {
           <div className="relative overflow-hidden rounded-3xl flex justify-center">
             {/* Secondary Image/Portrait */}
             <div
-              className="bg-dark rounded-3xl overflow-hidden aspect-[4/3] w-full max-w-[130px] sm:max-w-md origin-center group relative cursor-pointer"
+              className="bg-dark rounded-3xl overflow-hidden aspect-4/3 w-full max-w-[130px] sm:max-w-md origin-center group relative cursor-pointer"
             >
               <Image
                 alt="Studio work"

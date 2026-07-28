@@ -50,8 +50,8 @@ export default function Header() {
       <header
         className={`mx-auto transition-all duration-500 w-[95%] md:w-[90%] max-w-5xl ${
           scrolled
-            ? "mt-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-[2rem] shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
-            : "mt-6 bg-black/10 backdrop-blur-md border border-white/5 rounded-[2rem]"
+            ? "mt-4 bg-black/40 backdrop-blur-2xl border border-white/10 rounded-4xl shadow-[0_8px_32px_rgba(0,0,0,0.6)]"
+            : "mt-6 bg-black/10 backdrop-blur-md border border-white/5 rounded-4xl"
         }`}
       >
         <nav
@@ -100,7 +100,7 @@ export default function Header() {
                   {link.name}
                 </Link>
                 {hoveredLink === link.name && (
-                  <div className="absolute inset-0 bg-white/10 rounded-full -z-0 transition-all" />
+                  <div className="absolute inset-0 bg-white/10 rounded-full z-0 transition-all" />
                 )}
               </li>
             ))}
@@ -115,7 +115,7 @@ export default function Header() {
                   }`}
                 >
                   <span className="relative z-10">Get In Touch</span>
-                  <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-brand opacity-0 group-hover:opacity-100 transition-opacity duration-500 -z-0" />
+                  <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-brand opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0" />
                 </div>
               </Link>
             </div>

@@ -63,7 +63,7 @@ export default function RootLayout({ children }) {
     <html lang="en" suppressHydrationWarning>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${playfair.variable} bg-[#0A0A0A] text-white font-sans selection:bg-brand selection:text-dark antialiased relative min-h-screen`}
+        className={`${inter.variable} ${playfair.variable} bg-dark text-white font-sans selection:bg-brand selection:text-dark antialiased relative min-h-screen`}
       >
         <div className="relative min-h-screen">
           <CustomCursor />

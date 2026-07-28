@@ -53,7 +53,7 @@ function ProjectCard({ project }) {
         data-cursor="hover"
       >
         <div className="bg-white/5 border border-white/10 rounded-3xl p-4 shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.15)] transition-all duration-500 overflow-hidden mb-6 hover:border-brand/50">
-          <div className="bg-white/5 rounded-2xl aspect-[4/3] overflow-hidden relative">
+          <div className="bg-white/5 rounded-2xl aspect-4/3 overflow-hidden relative">
             <Image
               alt={project.title}
               fill

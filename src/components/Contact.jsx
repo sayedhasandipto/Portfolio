@@ -164,7 +164,7 @@ export default function Contact() {
             className="flex flex-col justify-center"
           >
             <div className="bg-transparent border border-purple-900/30 p-6 md:p-8 rounded-2xl relative overflow-hidden">
-              <div className="absolute inset-0 bg-gradient-to-br from-purple-900/10 to-transparent pointer-events-none" />
+              <div className="absolute inset-0 bg-linear-to-br from-purple-900/10 to-transparent pointer-events-none" />
               <form onSubmit={handleSubmit} className="space-y-4 relative z-10">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="flex flex-col gap-1.5">

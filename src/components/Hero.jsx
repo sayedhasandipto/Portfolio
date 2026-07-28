@@ -12,10 +12,10 @@ import ScrollReveal from "./ScrollReveal";
 
 export default function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex items-center justify-center pt-24 pb-12 overflow-hidden bg-transparent">
+    <section className="relative min-h-svh flex items-center justify-center pt-24 pb-12 overflow-hidden bg-transparent">
       {/* Background */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[16vw] md:text-[14vw] font-black text-white/[0.02] uppercase whitespace-nowrap select-none leading-none z-0 tracking-[0.2em]">
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[16vw] md:text-[14vw] font-black text-white/2 uppercase whitespace-nowrap select-none leading-none z-0 tracking-[0.2em]">
           MERN STACK
         </div>
       </div>
@@ -74,7 +74,7 @@ export default function Hero() {
 
           {/* Portrait Right */}
           <ScrollReveal direction="up" delay={300} className="w-full md:w-1/2 flex justify-center md:justify-end relative mt-8 md:mt-0">
-            <div className="relative w-full max-w-[320px] md:max-w-[450px] aspect-[4/5] rounded-[2rem] md:rounded-[3rem] overflow-hidden group border border-white/10 shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_50px_rgba(139, 92, 246,0.15)] hover:scale-[1.02] hover:-rotate-1 transition-all duration-500 hover:border-brand/40">
+            <div className="relative w-full max-w-[320px] md:max-w-[450px] aspect-4/5 rounded-4xl md:rounded-[3rem] overflow-hidden group border border-white/10 shadow-[0_0_0_rgba(139, 92, 246,0)] hover:shadow-[0_0_50px_rgba(139, 92, 246,0.15)] hover:scale-[1.02] hover:-rotate-1 transition-all duration-500 hover:border-brand/40">
               <Image
                 src="https://i.ibb.co/tPMj0tRG/potrate.png"
                 alt="Portrait"
@@ -83,7 +83,7 @@ export default function Hero() {
                 sizes="(max-width: 768px) 100vw, 50vw"
                 className="object-cover grayscale group-hover:grayscale-0 transition-all duration-700 scale-105 group-hover:scale-100"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-dark via-transparent to-transparent opacity-60" />
+              <div className="absolute inset-0 bg-linear-to-t from-dark via-transparent to-transparent opacity-60" />
               <div className="absolute bottom-6 left-6 right-6 md:bottom-8 md:left-8 md:right-8 z-20">
                 <p className="text-brand font-black text-2xl md:text-4xl uppercase leading-none">MERN<br />EXPERT</p>
                 <div className="h-1 w-8 md:w-12 bg-white/20 mt-2" />

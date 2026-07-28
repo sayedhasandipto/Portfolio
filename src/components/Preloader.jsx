@@ -24,32 +24,32 @@ export default function Preloader({ onComplete }) {
 
   return (
     <div
-      className="fixed inset-0 z-[99999] pointer-events-none flex flex-col items-center justify-center overflow-hidden"
+      className="fixed inset-0 z-99999 pointer-events-none flex flex-col items-center justify-center overflow-hidden"
     >
       {/* Top Half Curtain */}
       <div 
-        className={`absolute top-0 left-0 w-full h-1/2 bg-[#0A0A0A] transition-transform duration-[1s] ease-[cubic-bezier(0.77,0,0.175,1)] ${
+        className={`absolute top-0 left-0 w-full h-1/2 bg-dark transition-transform duration-1000 ease-[cubic-bezier(0.77,0,0.175,1)] ${
           phase === 1 ? "-translate-y-full" : "translate-y-0"
         }`}
       />
       
       {/* Bottom Half Curtain */}
       <div 
-        className={`absolute bottom-0 left-0 w-full h-1/2 bg-[#0A0A0A] transition-transform duration-[1s] ease-[cubic-bezier(0.77,0,0.175,1)] ${
+        className={`absolute bottom-0 left-0 w-full h-1/2 bg-dark transition-transform duration-1000 ease-[cubic-bezier(0.77,0,0.175,1)] ${
           phase === 1 ? "translate-y-full" : "translate-y-0"
         }`}
       />
 
       {/* Middle Line separator (optional aesthetic touch) */}
       <div 
-        className={`absolute left-0 w-full h-[1px] bg-white/5 transition-all duration-[1s] ease-in-out ${
+        className={`absolute left-0 w-full h-px bg-white/5 transition-all duration-1000 ease-in-out ${
           phase === 1 ? "opacity-0 scale-x-0" : "opacity-100 scale-x-100 top-1/2"
         }`}
       />
 
       {/* Text Container */}
       <div 
-        className={`relative z-10 flex flex-col items-center text-center transition-opacity duration-[0.5s] ease-out ${
+        className={`relative z-10 flex flex-col items-center text-center transition-opacity duration-500 ease-out ${
           phase === 1 ? "opacity-0 scale-95" : "opacity-100 scale-100"
         }`}
       >
@@ -61,7 +61,7 @@ export default function Preloader({ onComplete }) {
         
         <div className="flex flex-col items-center justify-center">
           <span 
-            className="text-[#8B5CF6]/60 font-medium tracking-[0.5em] text-[8px] md:text-[10px] uppercase mb-3 opacity-0 animate-[fadeSlideDown_1s_ease-out_0.6s_forwards]"
+            className="text-brand/60 font-medium tracking-[0.5em] text-[8px] md:text-[10px] uppercase mb-3 opacity-0 animate-[fadeSlideDown_1s_ease-out_0.6s_forwards]"
           >
             Featuring
           </span>

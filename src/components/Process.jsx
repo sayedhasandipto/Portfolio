@@ -41,7 +41,7 @@ export default function Process() {
         <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
           {steps.map((step, index) => (
             <ScrollReveal key={index} delay={index * 100}>
-              <div className="relative p-8 bg-white/[0.03] border border-white/10 rounded-3xl hover:border-brand/40 hover:bg-white/[0.06] hover:shadow-[0_0_30px_rgba(139, 92, 246,0.08)] transition-all duration-500 group h-full">
+              <div className="relative p-8 bg-white/3 border border-white/10 rounded-3xl hover:border-brand/40 hover:bg-white/6 hover:shadow-[0_0_30px_rgba(139, 92, 246,0.08)] transition-all duration-500 group h-full">
                 <span className="text-6xl font-bold text-white/5 absolute top-4 right-8 group-hover:text-brand/15 transition-colors duration-500">
                   {step.number}
                 </span>
