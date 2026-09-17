@@ -3,6 +3,7 @@ export const projects = [
     id: 1,
     slug: "nakshidevs",
     title: "NakshiDevs - Agency & Software Solutions Platform",
+    featured: true,
     tags: ["MERN Stack", "Agency Platform", "Tailwind CSS"],
     img: "https://i.ibb.co.com/JWYr8sf7/Screenshot-35.png", // এখানে প্রজেক্টের একটা সুন্দর স্ক্রিনশট লিংক বসিয়ে দিও
     category: "Full-Stack App",
@@ -37,6 +38,7 @@ export const projects = [
     id: 2,
     slug: "fujimedical",
     title: "FujiMedical - Healthcare & Medical Equipment Platform",
+    featured: true,
     tags: ["MERN Stack", "Healthcare", "Tailwind CSS"],
     img: "https://i.ibb.co.com/XHjmsKk/Screenshot-36.png",
     category: "Full-Stack App",
@@ -64,6 +66,7 @@ export const projects = [
     id: 3,
     slug: "blood-donation",
     title: "BloodDonation - Life-Saving Blood Donor Connection Platform",
+    featured: true,
     tags: ["MERN Stack", "Healthcare", "Tailwind CSS"],
     img: "https://i.ibb.co.com/V0CV4ZSG/Screenshot-37.png", // এখানে প্রজেক্টের কভার ছবির ImgBB লিংক দিও
     category: "Full-Stack App",
@@ -91,6 +94,7 @@ export const projects = [
     id: 4,
     slug: "docappoint",
     title: "DocAppoint - Doctor Appointment & Healthcare Booking System",
+    featured: false,
     tags: ["MERN Stack", "Healthcare", "Tailwind CSS"],
     img: "https://i.ibb.co.com/1jHNQvL/Screenshot-38.png", // প্রজেক্টের একটি কভার স্ক্রিনশটের ImgBB লিংক দিও
     category: "Full-Stack App",
@@ -118,6 +122,7 @@ export const projects = [
     id: 5,
     slug: "rsir",
     title: "RSIR - Restaurant & Food Service Management System",
+    featured: false,
     tags: ["MERN Stack", "Food & Dining", "Tailwind CSS"],
     img: "https://i.ibb.co.com/HfPYZPY0/Screenshot-40.png",
     category: "Full-Stack App",
@@ -145,6 +150,7 @@ export const projects = [
     id: 9, // প্রজেক্টের ক্রমানুসারে সঠিক আইডি নম্বরটি বসিয়ে নিও
     slug: "bcbdashboard",
     title: "BCB Dashboard - Sports Analytics & Board Management System",
+    featured: false,
     tags: ["MERN Stack", "Dashboard", "Analytics", "Tailwind CSS"],
     img: "https://i.ibb.co.com/7dVdjFxf/Screenshot-41.png", // প্রজেক্টের কভার স্ক্রিনশটের ImgBB লিংক দিও
     category: "Full-Stack App",

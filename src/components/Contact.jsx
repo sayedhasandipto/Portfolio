@@ -1,249 +1,214 @@
 "use client";
 
-import { useState } from "react";
-import { motion } from "framer-motion";
-import {
-  FaEnvelope,
-  FaPhoneAlt,
-  FaMapMarkerAlt,
-  FaGithub,
-  FaLinkedinIn,
-  FaTwitter,
-  FaFacebookF,
-  FaPaperPlane,
-} from "react-icons/fa";
+import { useState, useEffect, useRef } from "react";
+import { Copy, Check, ArrowUpRight, Loader2 } from "lucide-react";
+import { PERSON } from "@/lib/data";
+import { playClick, playBeep, playSuccess } from "@/lib/sound";
 
 export default function Contact() {
-  const [result, setResult] = useState("");
-  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [copied, setCopied] = useState(false);
+  const [submitState, setSubmitState] = useState("idle"); // "idle" | "compiling" | "sent"
+  const revealRef = useRef([]);
 
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setResult("Sending...");
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) {
+            e.target.classList.add("show");
+            obs.unobserve(e.target);
+          }
+        });
+      },
+      { threshold: 0.08 }
+    );
+    revealRef.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
 
-    const formData = new FormData(e.target);
-    formData.append("access_key", "d723d673-4114-4859-a14d-36cf3d54ed77");
-
-    try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        body: formData,
-      });
-      const data = await response.json();
-      if (data.success) {
-        setResult("Message Sent Successfully!");
-        e.target.reset();
-      } else {
-        setResult(data.message);
-      }
-    } catch (error) {
-      setResult("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
-      setTimeout(() => setResult(""), 5000);
-    }
+  const addReveal = (el) => {
+    if (el && !revealRef.current.includes(el)) revealRef.current.push(el);
   };
 
-  const contactInfo = [
-    {
-      icon: <FaEnvelope className="text-purple-400" size={18} />,
-      title: "Email",
-      value: "sayedhasandipto@gmail.com",
-      link: "mailto:sayedhasandipto@gmail.com",
-    },
-    {
-      icon: <FaPhoneAlt className="text-purple-400" size={18} />,
-      title: "WhatsApp / Phone",
-      value: "+8801940863413",
-      link: "tel:+8801940863413",
-    },
-    {
-      icon: <FaMapMarkerAlt className="text-purple-400" size={18} />,
-      title: "Location",
-      value: "Dhaka, Bangladesh",
-      link: "https://maps.google.com/?q=Dhaka,+Bangladesh",
-    },
-  ];
+  const copyEmail = () => {
+    playClick();
+    navigator.clipboard.writeText(PERSON.email);
+    setCopied(true);
+    setTimeout(() => setCopied(false), 2000);
+  };
 
-  const socialLinks = [
-    {
-      icon: <FaGithub size={18} />,
-      link: "https://github.com/SayedHasanDIpto",
-    },
-    {
-      icon: <FaLinkedinIn size={18} />,
-      link: "https://www.linkedin.com/in/sayedhasandipto/",
-    },
-    {
-      icon: <FaTwitter size={18} />,
-      link: "https://x.com/devsayedhasan",
-    },
-    {
-      icon: <FaFacebookF size={18} />,
-      link: "https://www.facebook.com/SayedHasanDipto25",
-    },
-  ];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (submitState !== "idle") return;
+    
+    playBeep();
+    setSubmitState("compiling");
+    const formData = new FormData(e.target);
+    const subject = `Project Inquiry from ${formData.get("subject")}`;
+    const body = `From: ${formData.get("email")}%0A%0A${formData.get("message")}`;
+
+    setTimeout(() => {
+      playSuccess();
+      setSubmitState("sent");
+      window.location.href = `mailto:${PERSON.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
+      setTimeout(() => setSubmitState("idle"), 4000);
+    }, 900);
+  };
 
   return (
-    <section
-      className="overflow-hidden bg-[#0a0714] px-4 py-24 font-sans text-gray-200 md:px-8"
-      id="contact"
-    >
-      <div className="mx-auto w-full max-w-6xl">
-        <div className="grid grid-cols-1 gap-12 lg:grid-cols-2 lg:gap-20">
-          {/* Left Column */}
-          <motion.div
-            initial={{ opacity: 0, x: -30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex flex-col"
+    <section id="contact" className="relative py-24 px-4 sm:px-8 lg:px-12 grid-bg crosshair-container border-t-2 border-ink">
+      <span className="corner-mark corner-tl" style={{ color: "#ff5f1f" }} />
+      <span className="corner-mark corner-tr" style={{ color: "#ff5f1f" }} />
+
+      <div className="max-w-7xl mx-auto relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-start">
+        {/* Left col */}
+        <div className="lg:col-span-5 reveal" ref={addReveal}>
+          <div className="flex items-center gap-2 mb-4 font-mono text-[10px] font-bold text-ink uppercase tracking-widest">
+            <span className="bg-ink text-white px-1.5 py-0.5">06</span> CONTACT
+          </div>
+          <h2 className="mt-4 text-[clamp(2.5rem,5vw,4.5rem)] leading-[.9] font-bold uppercase tracking-tight text-ink">
+            LET&apos;S BUILD<br />
+            <span className="text-transparent" style={{ WebkitTextStroke: '1px #080a0d' }}>SOMETHING</span><br />
+            USEFUL.
+          </h2>
+          <p className="mt-6 text-sm leading-relaxed text-ink/75 max-w-md font-medium border-l-2 border-accent pl-4">
+            Have a product, dashboard, API or full-stack application in mind? Send the brief — the form opens your default email client with the details prefilled.
+          </p>
+          
+          <div className="mt-10 flex flex-col sm:flex-row gap-5 max-w-md">
+            <div className="contact-info-card flex-1">
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[#6b7280] mb-1.5">
+                // RESPONSE
+              </div>
+              <div className="font-bold text-ink text-base">Within 24h</div>
+            </div>
+            
+            <div className="contact-info-card flex-1">
+              <div className="font-mono text-[10px] uppercase tracking-widest text-[#6b7280] mb-1.5">
+                // LOCATION
+              </div>
+              <div className="font-bold text-ink text-base">Dhaka · GMT+6</div>
+            </div>
+          </div>
+
+          <div className="mt-8">
+            <button
+              onClick={copyEmail}
+              className="copy-btn w-max"
+            >
+              {copied ? (
+                <Check className="w-4 h-4 text-accent shrink-0" />
+              ) : (
+                <Copy className="w-4 h-4 text-accent shrink-0" />
+              )}
+              <span>{copied ? "COPIED TO CLIPBOARD" : PERSON.email.toUpperCase()}</span>
+            </button>
+          </div>
+        </div>
+
+        {/* Right col — form */}
+        <div className="lg:col-span-7 w-full reveal" ref={addReveal}>
+          <div className="flex items-center gap-2 mb-4 font-mono text-xs font-bold text-ink uppercase tracking-widest">
+            <span className="bg-ink text-white px-2 py-0.5">&gt;</span> SEND MESSAGE
+          </div>
+          
+          <div
+            className="border-2 border-ink shadow-[8px_8px_0_#080a0d] p-0 overflow-hidden flex flex-col relative group"
+            style={{
+              backgroundColor: "#111419",
+              backgroundImage:
+                "repeating-linear-gradient(0deg, #0d1014 0px, #0d1014 2px, #1a1e26 2px, #1a1e26 4px)",
+            }}
           >
-            <div className="mb-10">
-              <span className="mb-4 inline-block rounded-full border border-purple-800/40 bg-purple-950/40 px-3 py-1 text-xs font-bold tracking-widest text-purple-400 uppercase">
-                Get In Touch
-              </span>
-              <h2 className="mb-4 text-4xl leading-tight font-extrabold text-white md:text-5xl">
-                Let&aposs build something <br className="hidden md:block" />{" "}
-                amazing together.
-              </h2>
-              <p className="max-w-md text-sm leading-relaxed text-gray-400 md:text-base">
-                Whether you have a project in mind, a job opportunity, or just
-                want to say hi, my inbox is always open. I&aposll try my best to
-                get back to you!
-              </p>
-            </div>
-
-            <div className="mb-10 flex flex-col gap-4">
-              {contactInfo.map((info, idx) => (
-                <a
-                  key={idx}
-                  href={info.link}
-                  className="group flex items-center gap-4 rounded-xl border border-purple-900/30 bg-transparent p-4 transition-colors duration-200 hover:border-purple-500/50 hover:bg-purple-900/10"
-                >
-                  <div className="flex h-12 w-12 items-center justify-center rounded-lg border border-purple-900/40 bg-[#120e24] transition-transform duration-200 group-hover:scale-105">
-                    {info.icon}
-                  </div>
-                  <div>
-                    <p className="mb-1 text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
-                      {info.title}
-                    </p>
-                    <p className="text-sm font-medium text-gray-200 md:text-base">
-                      {info.value}
-                    </p>
-                  </div>
-                </a>
-              ))}
-            </div>
-
-            <div>
-              <p className="mb-4 text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
-                Connect with me
-              </p>
-              <div className="flex gap-4">
-                {socialLinks.map((social, idx) => (
-                  <a
-                    key={idx}
-                    href={social.link}
-                    className="flex h-11 w-11 items-center justify-center rounded-full border border-purple-900/40 bg-[#120e24] text-gray-400 transition-all duration-200 hover:scale-105 hover:border-purple-500 hover:bg-purple-600 hover:text-white"
-                  >
-                    {social.icon}
-                  </a>
-                ))}
+            {/* Terminal Header */}
+            <div className="flex justify-between items-center bg-[#0d0f13] px-6 py-4 font-mono text-xs text-[#e6e6e6] uppercase tracking-widest border-b border-[#272b31] relative z-10">
+              <div className="flex items-center gap-1.5 font-bold">
+                <span>&gt;_ CONTACT.SH</span>
+              </div>
+              <div
+                className={`font-bold tracking-wider transition-colors ${
+                  submitState === "compiling"
+                    ? "text-yellow-400 animate-pulse"
+                    : submitState === "sent"
+                    ? "text-emerald-400"
+                    : "text-[#ff5f1f]"
+                }`}
+              >
+                {submitState === "compiling" ? "COMPILING..." : submitState === "sent" ? "READY ✓" : "READY"}
               </div>
             </div>
-          </motion.div>
 
-          {/* Right Column */}
-          <motion.div
-            initial={{ opacity: 0, x: 30 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true, margin: "-50px" }}
-            transition={{ duration: 0.6, ease: "easeOut" }}
-            className="flex flex-col justify-center"
-          >
-            <div className="relative overflow-hidden rounded-2xl border border-purple-900/30 bg-transparent p-6 md:p-8">
-              <div className="pointer-events-none absolute inset-0 bg-linear-to-br from-purple-900/10 to-transparent" />
-              <form onSubmit={handleSubmit} className="relative z-10 space-y-4">
-                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
-                      Full Name
-                    </label>
-                    <input
-                      name="name"
-                      required
-                      type="text"
-                      placeholder="Sayed Hasan Dipto"
-                      className="w-full rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
-                    />
-                  </div>
-                  <div className="flex flex-col gap-1.5">
-                    <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
-                      Email Address
-                    </label>
-                    <input
-                      name="email"
-                      required
-                      type="email"
-                      placeholder="sayedhasandipto@gmail.com"
-                      className="w-full rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
-                    Subject
+            <form className="p-6 md:p-8 grid gap-6 relative z-10" onSubmit={handleSubmit}>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-widest text-[#858c97] mb-2.5">
+                    &gt; NAME
                   </label>
                   <input
+                    type="text"
                     name="subject"
                     required
-                    type="text"
-                    placeholder="Project Inquiry"
-                    className="w-full rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
+                    placeholder="Your name"
+                    className="w-full bg-[#0a0d12]/50 border border-[#282d36] px-4 py-3.5 outline-none font-mono text-sm text-[#e6e6e6] transition focus:border-[#ff5f1f] placeholder-[#858c97]/50"
                   />
                 </div>
-
-                <div className="flex flex-col gap-1.5">
-                  <label className="text-[10px] font-semibold tracking-widest text-gray-500 uppercase">
-                    Message
+                <div>
+                  <label className="block font-mono text-xs uppercase tracking-widest text-[#858c97] mb-2.5">
+                    &gt; EMAIL
                   </label>
-                  <textarea
-                    name="message"
+                  <input
+                    type="email"
+                    name="email"
                     required
-                    rows="5"
-                    placeholder="Tell me about your project..."
-                    className="w-full resize-none rounded-lg border border-purple-900/40 bg-[#120e24] px-4 py-3.5 text-sm text-white placeholder-gray-600 transition-colors duration-200 focus:border-purple-500 focus:outline-none"
-                  ></textarea>
+                    placeholder="you@company.com"
+                    className="w-full bg-[#0a0d12]/50 border border-[#282d36] px-4 py-3.5 outline-none font-mono text-sm text-[#e6e6e6] transition focus:border-[#ff5f1f] placeholder-[#858c97]/50"
+                  />
                 </div>
+              </div>
 
-                <button
-                  type="submit"
-                  disabled={isSubmitting}
-                  className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-purple-600 px-6 py-3.5 font-bold text-white transition-colors duration-200 hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {isSubmitting ? (
-                    "Sending..."
-                  ) : (
-                    <>
-                      <span>Send Message</span>
-                      <FaPaperPlane size={12} />
-                    </>
-                  )}
-                </button>
+              <div>
+                <label className="block font-mono text-xs uppercase tracking-widest text-[#858c97] mb-2.5">
+                  &gt; PROJECT_SCOPE
+                </label>
+                <textarea
+                  name="message"
+                  required
+                  rows="5"
+                  placeholder="Tell me what you're building..."
+                  className="w-full bg-[#0a0d12]/50 border border-[#282d36] px-4 py-3.5 outline-none font-mono text-sm text-[#e6e6e6] transition resize-y focus:border-[#ff5f1f] placeholder-[#858c97]/50 min-h-[140px]"
+                ></textarea>
+              </div>
 
-                {result && (
-                  <p
-                    className={`mt-4 text-center text-xs font-semibold tracking-wide ${result.includes("Successfully") ? "text-purple-400" : "text-red-400"}`}
-                  >
-                    {result}
-                  </p>
+              <button
+                type="submit"
+                disabled={submitState !== "idle"}
+                className={`mt-2 text-white py-4 px-6 font-mono text-xs sm:text-sm uppercase tracking-widest font-bold flex justify-center items-center gap-2 transition shadow-none cursor-pointer ${
+                  submitState === "compiling"
+                    ? "bg-yellow-500 text-black cursor-wait"
+                    : submitState === "sent"
+                    ? "bg-emerald-600 text-white"
+                    : "bg-[#ff5f1f] hover:bg-white hover:text-ink"
+                }`}
+              >
+                {submitState === "compiling" ? (
+                  <>
+                    <Loader2 className="w-4 h-4 animate-spin" />
+                    <span>&gt; COMPILING BRIEF...</span>
+                  </>
+                ) : submitState === "sent" ? (
+                  <>
+                    <Check className="w-4 h-4" />
+                    <span>&gt; CLIENT LAUNCHED ✓</span>
+                  </>
+                ) : (
+                  <>
+                    <span>GENERATE EMAIL REQUEST</span>
+                    <span className="text-sm">↗</span>
+                  </>
                 )}
-              </form>
-            </div>
-          </motion.div>
+              </button>
+            </form>
+          </div>
         </div>
       </div>
     </section>

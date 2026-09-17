@@ -1,48 +1,50 @@
-import { Inter, Playfair_Display } from "next/font/google";
-import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
-import ClickEffect from "@/components/ClickEffect";
-import NoiseOverlay from "@/components/NoiseOverlay";
+import { Space_Grotesk, DM_Mono } from "next/font/google";
 
-const inter = Inter({
+import "./globals.css";
+import ProgressBar from "@/components/ProgressBar";
+import CustomCursor from "@/components/CustomCursor";
+import BackToTop from "@/components/BackToTop";
+import TerminalLoader from "@/components/TerminalLoader";
+
+const spaceGrotesk = Space_Grotesk({
   subsets: ["latin"],
-  variable: "--font-inter",
+  variable: "--font-space-grotesk",
   display: "swap",
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["400", "500", "600", "700"],
 });
 
-const playfair = Playfair_Display({
+const dmMono = DM_Mono({
   subsets: ["latin"],
-  variable: "--font-playfair",
-  style: ["normal", "italic"],
-  weight: ["400", "700"],
+  variable: "--font-dm-mono",
   display: "swap",
+  weight: ["400", "500"],
 });
 
 export const metadata = {
-  title: "Sayed Hasan Dipto | MERN Stack Developer & UI/UX Designer",
-  description: "Specialized in building high-performance Next.js applications with premium animations and intuitive user experiences.",
-  keywords: ["Next.js", "React", "Full-Stack Developer", "UI/UX Designer", "MERN Stack", "GSAP Animations"],
+  title: "Sayed Hasan Dipto — MERN Stack Developer",
+  description:
+    "Sayed Hasan Dipto — MERN Stack Developer building practical, scalable web products with React, Node.js, Express and MongoDB.",
+  keywords: [
+    "MERN Stack",
+    "Full Stack Developer",
+    "React",
+    "Node.js",
+    "Express",
+    "MongoDB",
+    "Next.js",
+    "Sayed Hasan Dipto",
+  ],
   authors: [{ name: "Sayed Hasan Dipto" }],
-  icons: {
-    icon: [
-      { url: "https://i.ibb.co/wZVXT6Yd/m1.png" },
-      { url: "https://i.ibb.co/wZVXT6Yd/m1.png", sizes: "32x32", type: "image/png" },
-    ],
-    shortcut: ["https://i.ibb.co/wZVXT6Yd/m1.png"],
-    apple: [
-      { url: "https://i.ibb.co/wZVXT6Yd/m1.png" },
-      { url: "https://i.ibb.co/wZVXT6Yd/m1.png", sizes: "180x180", type: "image/png" },
-    ],
-  },
+  // themeColor moved to viewport export below
   openGraph: {
-    title: "Sayed Hasan Dipto | Portfolio",
-    description: "Creative MERN Stack Developer specialized in the modern web ecosystem.",
+    title: "Sayed Hasan Dipto — MERN Stack Developer",
+    description:
+      "Full-stack engineer building scalable web products with the MERN stack.",
     url: "https://sayedhasandipto.vercel.app",
     siteName: "Sayed Hasan Dipto Portfolio",
     images: [
       {
-        url: "https://i.ibb.co/wZVXT6Yd/m1.png",
+        url: "https://i.ibb.co.com/ymYj65ML/passport-size.png",
         width: 1200,
         height: 630,
       },
@@ -52,45 +54,56 @@ export const metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Sayed Hasan Dipto | Portfolio",
-    description: "Creative MERN Stack Developer specialized in the modern web ecosystem.",
-    images: ["https://i.ibb.co/wZVXT6Yd/m1.png"],
+    title: "Sayed Hasan Dipto — MERN Stack Developer",
+    description:
+      "Full-stack engineer building scalable web products with the MERN stack.",
+    images: ["https://i.ibb.co.com/ymYj65ML/passport-size.png"],
   },
+};
+
+// Fix Next.js 16 warning: themeColor must be in viewport export
+export const viewport = {
+  themeColor: "#131619",
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body
-        suppressHydrationWarning
-        className={`${inter.variable} ${playfair.variable} bg-dark text-white font-sans selection:bg-brand selection:text-dark antialiased relative min-h-screen`}
-      >
-        <div className="relative min-h-screen">
-          <CustomCursor />
-          <ClickEffect />
-          <NoiseOverlay />
-          {children}
-        </div>
+    <html
+      lang="en"
+      className={`${spaceGrotesk.variable} ${dmMono.variable} scroll-smooth`}
+      suppressHydrationWarning
+    >
+      <body suppressHydrationWarning>
+        <a href="#about" className="skip-link">
+          Skip to content
+        </a>
+        <ProgressBar />
+        <CustomCursor />
+        {children}
+        <BackToTop />
+        <TerminalLoader />
 
-        {/* JSON-LD Structured Data for Google SEO */}
+        {/* JSON-LD Structured Data */}
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{
             __html: JSON.stringify({
               "@context": "https://schema.org",
               "@type": "Person",
-              "name": "Sayed Hasan Dipto",
-              "url": "https://sayedhasandipto.com",
-              "jobTitle": "MERN Stack Developer",
-              "description": "Specialized in building high-performance MERN stack applications with premium animations and intuitive user experiences.",
-              "sameAs": [
+              name: "Sayed Hasan Dipto",
+              url: "https://sayedhasandipto.vercel.app",
+              jobTitle: "MERN Stack Developer",
+              description:
+                "Full-stack engineer building scalable web products with React, Node.js, Express and MongoDB.",
+              sameAs: [
                 "https://www.linkedin.com/in/sayedhasandipto/",
-                "https://github.com/sayedhasandipto"
-              ]
-            })
+                "https://github.com/sayedhasandipto",
+              ],
+            }),
           }}
         />
       </body>
     </html>
   );
 }
+

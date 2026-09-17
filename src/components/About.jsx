@@ -1,82 +1,181 @@
 "use client";
 
-import Link from "next/link";
-import Image from "next/image";
+import { useEffect, useRef, useState } from "react";
+import { ArrowUpRight } from "lucide-react";
+import { PERSON, ABOUT_CARDS, NOW } from "@/lib/data";
+
+function useClock(tz) {
+  const [time, setTime] = useState("--:--:--");
+  useEffect(() => {
+    const tick = () => {
+      try {
+        setTime(
+          new Date().toLocaleTimeString("en-GB", {
+            timeZone: tz,
+            hour: "2-digit",
+            minute: "2-digit",
+            second: "2-digit",
+            hour12: false,
+          })
+        );
+      } catch {
+        setTime(new Date().toLocaleTimeString("en-GB", { hour: "2-digit", minute: "2-digit", second: "2-digit", hour12: false }));
+      }
+    };
+    tick();
+    const id = setInterval(tick, 1000);
+    return () => clearInterval(id);
+  }, [tz]);
+  return time;
+}
+
+function useGitHubStats() {
+  const [stats, setStats] = useState({ repos: 78, followers: 3, following: 5, since: 2023 });
+  useEffect(() => {
+    fetch("/api/github")
+      .then((r) => r.json())
+      .then((d) => setStats(d))
+      .catch((err) => console.error("Stats fetch failed:", err));
+  }, []);
+  return stats;
+}
 
 export default function About() {
-  const tools = [
-    { name: "Frontend Development", desc: "Next.js, React.js, Tailwind CSS", year: "2023 - Present" },
-    { name: "Creative Design", desc: "Figma, UI/UX Design", year: "2023 - Present" },
-    { name: "Backend Development", desc: "MongoDB, Firebase, Node.js, MongoDB", year: "2024 - Present" },
-    { name: "Full-stack Solutions", desc: "Better Auth, API Integration", year: "2024 - Present" },
-  ];
+  const time = useClock(PERSON.timezoneTZ);
+  const ghStats = useGitHubStats();
+  const revealRef = useRef([]);
+
+  useEffect(() => {
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) { e.target.classList.add("show"); obs.unobserve(e.target); }
+        });
+      },
+      { threshold: 0.08 }
+    );
+    revealRef.current.forEach((el) => el && obs.observe(el));
+    return () => obs.disconnect();
+  }, []);
+
+  const addReveal = (el) => {
+    if (el && !revealRef.current.includes(el)) revealRef.current.push(el);
+  };
 
   return (
-    <section id="about" className="py-24 px-6 bg-transparent transition-colors relative overflow-hidden" data-purpose="intro-content">
+    <div className="dark-canvas white-grid">
+      <section
+        id="about"
+        className="relative py-24 px-4 sm:px-8 lg:px-12 text-white crosshair-container"
+      >
+        <span className="corner-mark corner-tl" style={{ color: "rgba(255,255,255,.35)" }} />
+        <span className="corner-mark corner-tr" style={{ color: "rgba(255,255,255,.35)" }} />
 
-      <div className="max-w-7xl mx-auto">
-        <p className="text-center text-sm font-medium text-gray-400 mb-4 uppercase tracking-widest">
-          — About Me —
-        </p>
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="grid lg:grid-cols-12 gap-12">
+            <div className="lg:col-span-4 reveal" ref={addReveal}>
+              <span className="label-accent">// 01 — Profile</span>
+              <h2 className="mt-4 text-4xl sm:text-5xl font-bold tracking-tight uppercase text-white">
+                Less noise.
+                <br />
+                More system.
+              </h2>
+            </div>
+            <div className="lg:col-span-8 reveal" ref={addReveal}>
+              <p className="text-xl sm:text-2xl leading-relaxed text-white/80 max-w-4xl">
+                I like turning messy requirements into clear interfaces, predictable APIs,
+                maintainable data models and deployable products.
+              </p>
 
-        <h2 className="text-3xl md:text-6xl text-center font-serif mb-16 overflow-hidden flex flex-wrap justify-center gap-x-4 text-white px-4">
-          <span className="italic block">Pushing</span>
-          <span className="italic block">Boundaries</span>
-          <span className="not-italic font-sans font-light block">since</span>
-          <span className="not-italic font-sans font-light block">2023</span>
-        </h2>
+              <div className="my-8 flex flex-wrap items-center gap-4">
+                <div className="live-widget">
+                  <span className="pulse" />
+                  <span>DHAKA · {time}</span>
+                  <span className="text-accent">·</span>
+                  <span>Available</span>
+                </div>
+              </div>
 
-        <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-start">
-          <div className="relative overflow-hidden rounded-3xl flex justify-center">
-            {/* Secondary Image/Portrait */}
-            <div
-              className="bg-dark rounded-3xl overflow-hidden aspect-4/3 w-full max-w-[130px] sm:max-w-md origin-center group relative cursor-pointer"
-            >
-              <Image
-                alt="Studio work"
-                fill
-                className="object-cover grayscale opacity-60 group-hover:grayscale-0 group-hover:opacity-100 group-hover:scale-105 transition-all duration-700 ease-in-out"
-                src="https://i.ibb.co/Rkzj9Qmj/20260511-123949.jpg"
-                sizes="(max-width: 768px) 100vw, 50vw"
-              />
-              <div className="absolute inset-0 bg-brand/10 opacity-0 group-hover:opacity-10 transition-opacity duration-700"></div>
+              <div className="my-8 h-px bg-gradient-to-r from-transparent via-accent/60 to-transparent" />
+
+              <div className="grid sm:grid-cols-3 gap-4">
+                {ABOUT_CARDS.map((card) => (
+                  <div
+                    key={card.num}
+                    className="glass p-5 relative overflow-hidden group hover:border-accent/50 transition"
+                  >
+                    <div className="font-mono text-accent text-xs">{card.num}</div>
+                    <h3 className="mt-3 font-semibold text-white">{card.title}</h3>
+                    <p className="mt-2 text-sm text-white/55 leading-relaxed">{card.desc}</p>
+                  </div>
+                ))}
+              </div>
             </div>
           </div>
 
-          <div className="px-2 md:px-0">
-            <p className="text-lg md:text-xl leading-relaxed text-gray-300 mb-8">
-              Full-stack developer focused on the React ecosystem. Specialized in building high-performance web applications using Next.js, Tailwind CSS, and MongoDB. Merging clean code with intuitive creative design.
-            </p>
-
-            <div className="mb-12 flex justify-center md:justify-start">
-              <Link href="https://www.facebook.com/SayedHasanDipto25" data-cursor="hover">
-                <button
-                  className="bg-brand text-dark text-xs uppercase tracking-widest px-8 py-3 rounded-full hover:bg-brand/90 hover:scale-105 active:scale-95 transition-all relative overflow-hidden group"
-                >
-                  <span className="relative z-10">Let&apos;s talk</span>
-                </button>
-              </Link>
+          {/* GitHub stats */}
+          <div className="mt-16 reveal" ref={addReveal}>
+            <div className="flex items-center justify-between mb-4">
+              <span className="label-accent">// Open source activity</span>
+              <a
+                href={PERSON.github}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="font-mono text-[10px] uppercase tracking-widest text-white/50 hover:text-accent transition inline-flex items-center gap-1.5"
+              >
+                View GitHub <ArrowUpRight className="w-3 h-3" />
+              </a>
             </div>
-
-            {/* Tool List */}
-            <div className="space-y-2 border-t border-white/10 pt-8">
-              {tools.map((tool, index) => (
-                <div
-                  key={index}
-                  className="flex flex-col sm:flex-row sm:justify-between sm:items-center group cursor-default p-4 rounded-xl transition-all gap-2 hover:translate-x-2 hover:bg-white/5"
-                >
-                  <div className="flex flex-col">
-                    <span className="font-medium group-hover:text-brand transition-colors text-white">{tool.name}</span>
-                    <span className="text-xs text-gray-400 sm:hidden">{tool.desc}</span>
+            <div className="gh-strip">
+              {[
+                { key: "repos", label: "// Repositories" },
+                { key: "followers", label: "// Followers" },
+                { key: "following", label: "// Following" },
+                { key: "since", label: "// Since" },
+              ].map(({ key, label }) => (
+                <div key={key} className="gh-cell">
+                  <div className="lbl">{label}</div>
+                  <div className={`val${ghStats[key] === "—" ? " loading" : ""}`}>
+                    {ghStats[key]}
                   </div>
-                  <span className="text-sm text-gray-400 hidden sm:block">{tool.desc}</span>
-                  <span className="text-[10px] text-gray-500">{tool.year}</span>
                 </div>
               ))}
             </div>
           </div>
+
+          {/* Now strip */}
+          <div className="mt-16 reveal" ref={addReveal}>
+            <div className="now-strip p-5 sm:p-6 flex flex-col sm:flex-row sm:items-center gap-5">
+              <div className="flex items-center gap-2 shrink-0">
+                <span className="w-2 h-2 bg-accent rounded-full animate-pulse" />
+                <span className="font-mono text-[10px] uppercase tracking-widest text-accent">
+                  // Now
+                </span>
+              </div>
+              <div className="grid sm:grid-cols-3 gap-4 flex-1 text-xs font-mono">
+                <div>
+                  <div className="text-white/45 uppercase text-[9px] tracking-widest mb-1">
+                    Learning
+                  </div>
+                  <div className="text-white/90">{NOW.learning}</div>
+                </div>
+                <div>
+                  <div className="text-white/45 uppercase text-[9px] tracking-widest mb-1">
+                    Building
+                  </div>
+                  <div className="text-white/90">{NOW.building}</div>
+                </div>
+                <div>
+                  <div className="text-white/45 uppercase text-[9px] tracking-widest mb-1">
+                    Reading
+                  </div>
+                  <div className="text-white/90">{NOW.reading}</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </div>
   );
 }

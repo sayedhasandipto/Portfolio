@@ -1,49 +1,37 @@
-"use client";
-
-import { useState } from "react";
-import Header from "@/components/Header";
+import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
-import Profile from "@/components/Profile";
-import Partners from "@/components/Partners";
-import Skills from "@/components/Skills";
-import Projects from "@/components/Projects";
-import Stats from "@/components/Stats";
-import Process from "@/components/Process";
+import About from "@/components/About";
+import Stack from "@/components/Stack";
+import Work from "@/components/Work";
 import Testimonials from "@/components/Testimonials";
+import Process from "@/components/Process";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import FluidBackground from "@/components/FluidBackground";
-import Preloader from "@/components/Preloader";
-import PageWrapper from "@/components/PageWrapper";
 
 export default function Home() {
-  const [isLoading, setIsLoading] = useState(true);
-
   return (
     <>
-      <FluidBackground />
-      
-      {isLoading && (
-        <Preloader key="preloader" onComplete={() => setIsLoading(false)} />
-      )}
-
-      {!isLoading && (
-        <PageWrapper>
-          <Header />
-          <main className="pt-20 dot-grid">
-            <Hero />
-            <Profile />
-            <Stats />
-            <Partners />
-            <Skills />
-            <Projects />
-            <Process />
-            <Testimonials />
-            <Contact />
-          </main>
-          <Footer />
-        </PageWrapper>
-      )}
+      <Navbar />
+      <main id="home">
+        <Hero />
+        <div className="relative dark-canvas white-grid">
+          <About />
+          <div className="px-4 sm:px-8 lg:px-12">
+            <div className="dark-divider" />
+          </div>
+          <Stack />
+          <div className="px-4 sm:px-8 lg:px-12">
+            <div className="dark-divider" />
+          </div>
+          <Work />
+          <div className="absolute inset-x-0 bottom-0 h-24 fade-to-paper pointer-events-none z-0" />
+        </div>
+        <Testimonials />
+        <Process />
+        <Contact />
+      </main>
+      <Footer />
     </>
   );
 }
+

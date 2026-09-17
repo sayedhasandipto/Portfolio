@@ -3,102 +3,70 @@
 import { useEffect, useRef } from "react";
 
 export default function CustomCursor() {
-  const dotRef = useRef(null);
-  const ringRef = useRef(null);
+  const cursorRef = useRef(null);
 
   useEffect(() => {
-    const dot = dotRef.current;
-    const ring = ringRef.current;
-    if (!dot || !ring) return;
+    // Only run on non-touch devices
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
     let raf;
-    let ringX = -100, ringY = -100;
-    let targetX = -100, targetY = -100;
+    let mouseX = window.innerWidth / 2;
+    let mouseY = window.innerHeight / 2;
+    let cursorX = mouseX;
+    let cursorY = mouseY;
+    let isHovering = false;
+    let isClicking = false;
 
-    const onMove = (e) => {
-      targetX = e.clientX;
-      targetY = e.clientY;
-      dot.style.transform = `translate(${targetX}px, ${targetY}px)`;
+    const cursor = cursorRef.current;
+    if (!cursor) return;
+
+    const onMouseMove = (e) => {
+      mouseX = e.clientX;
+      mouseY = e.clientY;
+      
+      const target = e.target.closest(
+        "a, button, input, textarea, .project-card, .step-card, .testimonial-card, .contact-info-card, .copy-btn, .stack-card, .glass, .now-strip, .gh-strip, .live-widget, .filter, [data-cursor-hover]"
+      );
+      if (target && !isHovering) {
+        isHovering = true;
+        cursor.classList.add("cursor-hover");
+      } else if (!target && isHovering) {
+        isHovering = false;
+        cursor.classList.remove("cursor-hover");
+      }
     };
 
-    const animate = () => {
-      ringX += (targetX - ringX) * 0.12;
-      ringY += (targetY - ringY) * 0.12;
-      ring.style.transform = `translate(${ringX}px, ${ringY}px)`;
-      raf = requestAnimationFrame(animate);
+    const onMouseDown = () => {
+      isClicking = true;
+      cursor.classList.add("cursor-click");
+    };
+    const onMouseUp = () => {
+      isClicking = false;
+      cursor.classList.remove("cursor-click");
     };
 
-    const onEnterHover = () => ring.classList.add("cursor-hover");
-    const onLeaveHover = () => ring.classList.remove("cursor-hover");
+    window.addEventListener("mousemove", onMouseMove, { passive: true });
+    window.addEventListener("mousedown", onMouseDown, { passive: true });
+    window.addEventListener("mouseup", onMouseUp, { passive: true });
 
-    document.addEventListener("mousemove", onMove, { passive: true });
-    document.querySelectorAll("[data-cursor='hover']").forEach((el) => {
-      el.addEventListener("mouseenter", onEnterHover);
-      el.addEventListener("mouseleave", onLeaveHover);
-    });
-
-    raf = requestAnimationFrame(animate);
+    const loop = () => {
+      cursorX += (mouseX - cursorX) * 0.2;
+      cursorY += (mouseY - cursorY) * 0.2;
+      if (cursor) {
+        cursor.style.left = `${cursorX}px`;
+        cursor.style.top = `${cursorY}px`;
+      }
+      raf = requestAnimationFrame(loop);
+    };
+    raf = requestAnimationFrame(loop);
 
     return () => {
-      document.removeEventListener("mousemove", onMove);
+      window.removeEventListener("mousemove", onMouseMove);
+      window.removeEventListener("mousedown", onMouseDown);
+      window.removeEventListener("mouseup", onMouseUp);
       cancelAnimationFrame(raf);
     };
   }, []);
 
-  return (
-    <>
-      {/* Dot — snaps instantly */}
-      <div
-        ref={dotRef}
-        className="cursor-dot"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: 6,
-          height: 6,
-          borderRadius: "50%",
-          background: "#8B5CF6",
-          pointerEvents: "none",
-          zIndex: 9999,
-          transform: "translate(-100px, -100px)",
-          marginLeft: -3,
-          marginTop: -3,
-          willChange: "transform",
-        }}
-      />
-      {/* Ring — lags behind */}
-      <div
-        ref={ringRef}
-        className="cursor-ring"
-        style={{
-          position: "fixed",
-          top: 0,
-          left: 0,
-          width: 36,
-          height: 36,
-          borderRadius: "50%",
-          border: "1.5px solid rgba(139, 92, 246,0.5)",
-          pointerEvents: "none",
-          zIndex: 9998,
-          transform: "translate(-100px, -100px)",
-          marginLeft: -18,
-          marginTop: -18,
-          willChange: "transform",
-          transition: "width 0.2s, height 0.2s, border-color 0.2s",
-        }}
-      />
-      <style>{`
-        @media (pointer: coarse) { .cursor-dot, .cursor-ring { display: none; } }
-        * { cursor: none !important; }
-        .cursor-ring.cursor-hover {
-          width: 56px;
-          height: 56px;
-          border-color: #8B5CF6;
-          margin-left: -28px;
-          margin-top: -28px;
-        }
-      `}</style>
-    </>
-  );
+  return <div id="cursor" ref={cursorRef} className="cursor-dot hidden sm:block" />;
 }
